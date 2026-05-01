@@ -5,3 +5,7 @@
 
 
 ### Technical Stack:
+- React JS
+- Next JS
+- Tailwind
+- JavaScript
