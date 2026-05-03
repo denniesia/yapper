@@ -1,22 +1,17 @@
 export default function TweetCard({ tweet }) {
     return (
-        <div className="border border-gray-200 rounded-2xl p-5 m-3 shadow-sm hover:shadow-md transition bg-white">
-            <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                {tweet.title}
-            </h3>
-
-            <p className="text-gray-600 mb-4">
-                {tweet.body}
-            </p>
-
-            <div className="flex items-center gap-4 text-sm text-gray-500 mb-3">
-                <span>👍 {tweet.reactions.likes}</span>
-                <span>👎 {tweet.reactions.dislikes}</span>
+        <div
+            key={tweet.id}
+            className="p-4 border-b border-gray-800 flex space-x-4 hover:bg-gray-900"
+        >
+            <div className="w-12 h-12 bg-gray-700 rounded-full" />
+            <div>
+                <div className="font-semibold">User {tweet.userId}</div>
+                <div className="text-gray-400 text-sm">@username · 1h</div>
+                <p className="mt-2">
+                    {tweet.body}
+                </p>
             </div>
-
-            <p className="text-xs text-gray-400">
-                Tags: {tweet.tags.join(", ")}
-            </p>
         </div>
     );
 }

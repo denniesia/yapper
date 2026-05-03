@@ -7,6 +7,7 @@ async function getTweets() {
 
 export default async function HomePage() {
 	const tweets = await getTweets();
+    console.log(tweets);
 
 	return (
 		<div className="flex min-h-screen bg-black text-white">
@@ -53,22 +54,9 @@ export default async function HomePage() {
 				</div>
 
 				{/* Tweets */}
-				{[1, 2, 3].map((tweet) => (
-					<div
-						key={tweet}
-						className="p-4 border-b border-gray-800 flex space-x-4 hover:bg-gray-900"
-					>
-						<div className="w-12 h-12 bg-gray-700 rounded-full" />
-						<div>
-							<div className="font-semibold">User {tweet}</div>
-							<div className="text-gray-400 text-sm">@user{tweet} · 1h</div>
-							<p className="mt-2">
-								This is a sample tweet content to mimic the Twitter home feed
-								UI.
-							</p>
-						</div>
-					</div>
-				))}
+				{tweets.posts.map((tweet) => (
+                    <TweetCard key={tweet.id} tweet={tweet} />
+                ))}
 			</main>
 
 			{/* Right Sidebar */}
