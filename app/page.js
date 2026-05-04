@@ -1,4 +1,4 @@
-import TweetCard from "./components/TweetCard";
+import TweetCard from "./components/tweet/TweetCard";
 
 async function getTweets() {
 	const res = await fetch("https://dummyjson.com/posts");
@@ -11,7 +11,6 @@ export default async function HomePage() {
 
 	return (
 		<div className="flex min-h-screen bg-black text-white">
-			{/* Sidebar */}
 			<aside className="w-64 p-6 border-r border-gray-800 hidden md:flex flex-col justify-between">
 				<div className="space-y-6">
 					<h1 className="text-3xl font-bold">yapper</h1>
