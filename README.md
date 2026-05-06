@@ -2,7 +2,8 @@
 
 
 ### Features: 
-
+- Browsing Tweets
+- CRUD operations on Tweets
 
 ### Technical Stack:
 - React JS
