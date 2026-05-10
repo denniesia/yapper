@@ -12,3 +12,4 @@
 - Next JS
 - Tailwind
 - JavaScript
+- MongoDB
