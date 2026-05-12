@@ -3,6 +3,7 @@
 
 ### Features: 
 - Browsing Tweets
+- Filtering Tweets
 - CRUD operations on Tweets
 - Liking tweets
 - Commenting on Tweets
