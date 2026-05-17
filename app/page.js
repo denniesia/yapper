@@ -13,7 +13,7 @@ export default async function HomePage() {
 	return (
 		<div className="flex min-h-screen bg-black text-white">
 			<Sidebar />
-			<Feed tweets={tweets.posts} />
+			<Feed tweets={tweets} />
 			<RightSidebar />
 		</div>
 	);

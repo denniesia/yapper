@@ -1,9 +1,14 @@
 export async function getTweets() {
-  const res = await fetch("https://dummyjson.com/posts", {
-    cache: "no-store", // important for fresh data
-  });
+  const response = await fetch(
+    "http://localhost:3001/api/tweets",
+    {
+      cache: "no-store",
+    }
+  );
 
-  if (!res.ok) throw new Error("Failed to fetch tweets");
+  if (!response.ok) {
+    throw new Error("Failed to fetch tweets");
+  }
 
-  return res.json();
+  return response.json();
 }

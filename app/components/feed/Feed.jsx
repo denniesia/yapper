@@ -13,7 +13,7 @@ export default function Feed({ tweets }) {
       <TweetInput />
 
       {tweets.map((tweet) => (
-        <TweetCard key={tweet.id} tweet={tweet} />
+        <TweetCard key={tweet._id} tweet={tweet} />
       ))}
     </main>
   );
