@@ -27,17 +27,15 @@ export default async function LoginPage() {
         </div>
 
         <div className="flex flex-col gap-4">
-          {providers &&
-            Object.values(providers).map((provider) => (
-              <div key={provider.name}>
+         
                 <button
-                  onClick={() => signIn(provider.id)}
+                  // onClick={() => signIn(provider.id)}
                   className="w-full bg-white text-black py-2 rounded-full font-semibold hover:bg-gray-200 transition"
                 >
                   Sign in with 
                 </button>
-              </div>
-            ))}
+       
+          
         </div>
       </div>
     </div>
