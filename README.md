@@ -14,6 +14,7 @@
 - Tailwind
 - JavaScript
 - MongoDB
+- BCRYPT 
 
   
 ### Installation Guide
