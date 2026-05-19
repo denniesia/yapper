@@ -7,6 +7,7 @@
 - CRUD operations on Tweets
 - Liking tweets
 - Commenting on Tweets
+- Authentication System - JWT, Github
 
 ### Technical Stack:
 - React JS
