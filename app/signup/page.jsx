@@ -47,6 +47,11 @@ export default function SignUp() {
        
     }
 
+
+      const handleProvider = (event, value) => {
+            event.preventDefault();
+            signIn(value, {callbackUrl: "/"})
+       }
     return (
         <div className="bg-black text-white min-h-screen flex items-center justify-center px-4">
 
@@ -133,12 +138,13 @@ export default function SignUp() {
                             <div className="flex-1 h-px bg-gray-700"></div>
                         </div>
 
-                        {/* <!-- Google --> */}
+                        {/* <!-- Github --> */}
                         <button
                             type="button"
                             className="w-full border border-gray-700 py-3 rounded-full hover:bg-gray-900 transition"
+                            onClick={(e) => handleProvider(e, "github")}
                         >
-                            Sign in with Google
+                            Sign in with Github
                         </button>
 
                         {/* <!-- Forgot --> */}

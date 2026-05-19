@@ -35,6 +35,11 @@ export default function Login() {
         }
    }
 
+   const handleProvider = (event, value) => {
+        event.preventDefault();
+        signIn(value, {callbackUrl: "/"})
+   }
+
     return (
         <div className="bg-black text-white min-h-screen flex items-center justify-center px-4">
 
@@ -102,9 +107,10 @@ export default function Login() {
                         {/* <!-- Google --> */}
                         <button
                             type="button"
+                            onClick={(e) => handleProvider(e, "github")}
                             className="w-full border border-gray-700 py-3 rounded-full hover:bg-gray-900 transition"
                         >
-                            Login in with Google
+                            Login in with Github
                         </button>
 
                         {/* <!-- Forgot --> */}

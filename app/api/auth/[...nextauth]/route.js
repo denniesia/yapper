@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 
 import User from "../../../lib/schemas/UserSchema";
 import { makeSureDbIsReady } from "../../../lib/db";
+import Github from "next-auth/providers/github";
 
 export const authOptions = {
   session: {
@@ -11,6 +12,11 @@ export const authOptions = {
   },
 
   providers: [
+    Github({
+        clientId: process.env.GITHUB_ID,
+        clientSecret: process.env.GITHUB_SECRET,
+
+    }),
     CredentialsProvider({
       name: "Credentials",
 
@@ -54,11 +60,27 @@ export const authOptions = {
   ],
 
   callbacks: {
+    async signIn({ account, profile}) {
+        if (account?.provider === "github") {
+            await makeSureDbIsReady();
+            const existingUser = await User.findOne({ email: profile?.email });
+            if (!existingUser) {
+                const newUser = new User({
+                    email: profile?.email,
+                    username: profile?.login,
+                    image: profile?.avatar_url,
+                });
+                await newUser.save();
+            }
+        }
+         return true;
+    },
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
         token.email = user.email;
         token.name = user.name;
+        token.image = user.image || "";
       }
       return token;
     },
@@ -69,6 +91,7 @@ export const authOptions = {
           id: token.id,
           email: token.email,
           name: token.name,
+          image: token.image,
         };
       }
       return session;
