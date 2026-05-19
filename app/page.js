@@ -1,9 +1,8 @@
-import Link from "next/link";
+
 import Feed from "./components/feed/Feed";
 import RightSidebar from "./components/layout/RightSidebar";
 import Sidebar from "./components/layout/Sidebar";
 import { getTweets } from "./lib/getTweets";
-
 
 
 export default async function HomePage() {
@@ -12,9 +11,11 @@ export default async function HomePage() {
 
 	return (
 		<div className="flex min-h-screen bg-black text-white">
-			<Sidebar />
-			<Feed tweets={tweets} />
-			<RightSidebar />
+			
+				<Sidebar />
+				<Feed tweets={tweets} />
+				<RightSidebar />
+	
 		</div>
 	);
 }
