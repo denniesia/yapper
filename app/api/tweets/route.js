@@ -1,5 +1,5 @@
 import { makeSureDbIsReady } from "../../lib/db";
-import Tweet from "../../schemas/TweetSchema";
+import Tweet from "../../lib/schemas/TweetSchema";
 
 export async function POST(req) {
   try {

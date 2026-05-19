@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-, "app/page.js", "app/schemas/TweetSchema.js"  ],
+, "app/page.js", "app/lib/schemas/TweetSchema.js"  ],
   "exclude": ["node_modules"]
 }

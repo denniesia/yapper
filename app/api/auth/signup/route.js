@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
 import { makeSureDbIsReady } from "../../../lib/db";
-import User from "../../../schemas/UserSchema";
+import User from "../../../lib/schemas/UserSchema";
 
 
 export async function POST(req) {

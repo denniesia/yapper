@@ -4,48 +4,36 @@ import { TriangleAlert } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
+import { signIn } from "next-auth/react"
 
 
-export default function SignUp() {
-    const [form, setForm] = useState({
-        username: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-    });
-    const [pending, setPending] = useState(false);
-    const [error, setError] = useState(null);
-    const router = useRouter();
+export default function Login() {
+   const [email, setEmail] = useState("");
+   const [password, setPassword] = useState("");
+   const [pending, setPending] = useState(false);
+   const router = useRouter();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setPending(true);
+   const [error, setError] = useState(null)
 
-        const res = await fetch("api/auth/signup", {
-            method: "POST",
-            headers:{
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(form),
+   const handleSubmit = async (e) =>  {
+        e. preventDefault();
+        setPending(true)
+        const res = await signIn("credentials", {
+            redirect: false,
+            email, 
+            password
         })
 
-        const data = await res.json();
-
-        if (res.ok) {
+        if (res?.ok) {
+            router.push('/');
+            toast.success('Login is successful');
+        } else if ( res?.status === 401) {
+            setError("Invalid credentials");
             setPending(false);
-            
-            toast.success(data.message)
-            router.push('/login')
-        } else if (res.status === 400) {
-            setError(data.message);
-            setPending(false)
-        } else if (res.status === 500) {
-            setError(data.message);
-            setPending(false)
+        } else {
+            setError('Something went wrong');
         }
-
-       
-    }
+   }
 
     return (
         <div className="bg-black text-white min-h-screen flex items-center justify-center px-4">
@@ -59,7 +47,7 @@ export default function SignUp() {
 
                 {/* <!-- Right --> */}
                 <div className="max-w-md w-full mx-auto">
-                    <h2 className="text-5xl font-extrabold mb-10">Create a new account</h2>
+                    <h2 className="text-5xl font-extrabold mb-10">Welcome Back</h2>
 
                     {!!error && (
                         <div className="bg-red-400 p-3 rounded-2xl flex items-center gap-2 text-sm mb-6">
@@ -69,25 +57,13 @@ export default function SignUp() {
                     )}
 
                     <form className="space-y-5" onSubmit={handleSubmit}>
-                        {/* <!-- Username --> */}
-                        <div>
-                            <input
-                                type="text"
-                                disabled={pending}
-                                placeholder="Username"
-                                value={form.username}
-                                onChange={(e) => setForm({...form, username: e.target.value})}
-                                required
-                                className="w-full bg-black border border-gray-700 rounded-md px-4 py-4 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
-                            />
-                        </div>
                         <div>
                             <input
                                 type="email"
                                 disabled={pending}
                                 placeholder="Email"
-                                value={form.email}
-                                onChange={(e) => setForm({...form, email: e.target.value })}
+                                value={email}
+                                onChange={(e) => setEmail( e.target.value )}
                                 required
                                 className="w-full bg-black border border-gray-700 rounded-md px-4 py-4 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
                             />
@@ -99,31 +75,21 @@ export default function SignUp() {
                                 type="password"
                                 disabled={pending}
                                 placeholder="Password"
-                                value={form.password}
-                                onChange={(e) => setForm({...form, password: e.target.value })}
-                                required
-                                className="w-full bg-black border border-gray-700 rounded-md px-4 py-4 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
-                            />
-                        </div>
-                        <div>
-                            <input
-                                type="password"
-                                disabled={pending}
-                                placeholder="Confirm Password"
-                                value={form.confirmPassword}
-                                onChange={(e) => setForm({...form, confirmPassword: e.target.value })}
+                                value={password}
+                                onChange={(e) => setPassword( e.target.value )}
                                 required
                                 className="w-full bg-black border border-gray-700 rounded-md px-4 py-4 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
                             />
                         </div>
 
-                        {/* <!-- Sign In Button --> */}
+
+                        {/* <!-- Login In Button --> */}
                         <button
                             type="submit"
                             disabled={pending}
                             className="w-full bg-white text-black font-bold py-3 rounded-full hover:bg-gray-200 transition"
                         >
-                            Sign In
+                            Login In
                         </button>
 
                         {/* <!-- Divider --> */}
@@ -138,7 +104,7 @@ export default function SignUp() {
                             type="button"
                             className="w-full border border-gray-700 py-3 rounded-full hover:bg-gray-900 transition"
                         >
-                            Sign in with Google
+                            Login in with Google
                         </button>
 
                         {/* <!-- Forgot --> */}
@@ -151,9 +117,9 @@ export default function SignUp() {
 
                     {/* <!-- Signup --> */}
                     <p className="text-gray-500 mt-10">
-                        You already have an account? 
+                        You don't have an account?
                         <a href="#" className="text-blue-500 hover:underline">
-                            Login
+                            Sign up
                         </a>
                     </p>
                 </div>
