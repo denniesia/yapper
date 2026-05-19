@@ -1,21 +1,26 @@
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
 import Feed from "./components/feed/Feed";
 import RightSidebar from "./components/layout/RightSidebar";
 import Sidebar from "./components/layout/Sidebar";
 import { getTweets } from "./lib/getTweets";
-
+import { authOptions } from "./api/auth/[...nextauth]/route";
 
 export default async function HomePage() {
-	const tweets = await getTweets();
+	const session = await getServerSession(authOptions);
 
+	if (!session) {
+		redirect("/login");
+	}
+
+	const tweets = await getTweets();
 
 	return (
 		<div className="flex min-h-screen bg-black text-white">
-			
-				<Sidebar />
-				<Feed tweets={tweets} />
-				<RightSidebar />
-	
+			<Sidebar />
+			<Feed tweets={tweets} />
+			<RightSidebar />
 		</div>
 	);
 }
