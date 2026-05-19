@@ -4,25 +4,24 @@ import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 export default function LogoutButton() {
-  const router = useRouter();
-  const { data: session } = useSession();
+    const router = useRouter();
+    const { data: session } = useSession();
 
-  const handleSignOut = async () => {
-    await signOut({
-      redirect: false,
-    });
+    const handleSignOut = async () => {
+        await signOut({
+            redirect: false,
+        });
 
-    router.push("/login");
-  };
+        router.push("/login");
+    };
 
-  if (!session) return null;
+    if (!session) return null;
 
-  return (
-    <div
-      className="hover:text-blue-400 cursor-pointer"
-      onClick={handleSignOut}
-    >
-      Logout
-    </div>
-  );
+    return (
+        <button className="w-full bg-amber-800 py-1.5 rounded-full font-semibold hover:bg-blue-600"
+            onClick={handleSignOut}
+        >
+            Logout
+        </button>
+    );
 }
