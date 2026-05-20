@@ -1,30 +1,28 @@
 import mongoose from "mongoose";
 
 const TweetSchema = new mongoose.Schema(
-  {
-    content: {
-      type: String,
-      required: true,
-      maxlength: 280,
-    },
+	{
+		content: {
+			type: String,
+			required: true,
+			maxlength: 280,
+		},
 
-    // author: {
-    //   type: String,
-    //   required: true,
-    // },
+		author: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "User",
+		},
 
-    likes: {
-      type: Number,
-      default: 0,
-    },
-  },
-  {
-    timestamps: true,
-  }
+		likes: {
+			type: Number,
+			default: 0,
+		},
+	},
+	{
+		timestamps: true,
+	},
 );
 
-const Tweet =
-  mongoose.models.Tweet ??
-  mongoose.model("Tweet", TweetSchema);
+const Tweet = mongoose.models.Tweet ?? mongoose.model("Tweet", TweetSchema);
 
 export default Tweet;

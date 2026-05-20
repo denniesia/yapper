@@ -1,5 +1,6 @@
 export default function TweetCard({ tweet }) {
-    console.log(tweet)
+
+    
     return (
         <div
             key={tweet._id}
@@ -11,7 +12,7 @@ export default function TweetCard({ tweet }) {
                 {/* <div className="font-semibold">User {tweet.userId}</div> */}
 
                 <div className="text-gray-400 text-sm">
-                    @username · 1h
+                    @tweet.author.username · 1h
                 </div>
 
                 <p className="mt-2">

@@ -15,16 +15,24 @@ export default function TweetInput() {
 
         const response = await fetch("/api/tweets", {
             method: "POST",
-            body: JSON.stringify({ content }),
+            body: JSON.stringify({
+                content,
+                author: session.user.id,
+            }),
             headers: {
                 "Content-Type": "application/json",
             },
+            
         });
 
-        const data = await response.json();
-        setContent("");
+        if (response.ok) {
+            setContent("");
+        }
+        
     }
-
+    
+    console.log("Session user:", session.user);
+console.log("User ID being sent:", session.user.id);
     return (
         <div className="p-4 border-b border-gray-800 flex space-x-4">
 
