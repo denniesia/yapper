@@ -59,7 +59,7 @@ export default function SignUp() {
 
                 {/* <!-- Left --> */}
                 <div className="hidden md:flex justify-center">
-                    <h1 className="text-[120px] font-bold">𝕏</h1>
+                    <h1 className="text-[120px] font-bold">𝕐</h1>
                 </div>
 
                 {/* <!-- Right --> */}
@@ -147,18 +147,12 @@ export default function SignUp() {
                             Sign in with Github
                         </button>
 
-                        {/* <!-- Forgot --> */}
-                        <div className="text-center">
-                            <a href="#" className="text-blue-500 hover:underline text-sm">
-                                Forgot password?
-                            </a>
-                        </div>
                     </form>
 
                     {/* <!-- Signup --> */}
                     <p className="text-gray-500 mt-10">
                         You already have an account? 
-                        <a href="#" className="text-blue-500 hover:underline">
+                        <a href="/login" className="text-blue-500 hover:underline ml-2">
                             Login
                         </a>
                     </p>
