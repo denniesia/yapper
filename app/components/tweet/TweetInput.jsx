@@ -3,7 +3,7 @@
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 
-export default function TweetInput() {
+export default function TweetInput({onTweetPosted }) {
     const [content, setContent] = useState("");
     const { data: session, status } = useSession();
 
@@ -27,12 +27,14 @@ export default function TweetInput() {
 
         if (response.ok) {
             setContent("");
+
+            if (onTweetPosted) {
+                onTweetPosted();
+            }
         }
-        
+
     }
-    
-    console.log("Session user:", session.user);
-console.log("User ID being sent:", session.user.id);
+
     return (
         <div className="p-4 border-b border-gray-800 flex space-x-4">
 
