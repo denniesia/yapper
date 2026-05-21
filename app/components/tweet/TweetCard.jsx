@@ -1,4 +1,8 @@
+import { formatDistanceToNow } from "date-fns";
+
 export default function TweetCard({ tweet }) {
+    
+    const createdTimeAgo = formatDistanceToNow(new Date(tweet.createdAt), {addSuffix: true});
     
     return (
         <div
@@ -12,7 +16,7 @@ export default function TweetCard({ tweet }) {
             <div>
 
                 <div className="text-gray-400 text-sm">
-                    @{tweet.author.username} · 1h
+                    @{tweet.author.username} · {createdTimeAgo}
                 </div>
 
                 <p className="mt-2">
