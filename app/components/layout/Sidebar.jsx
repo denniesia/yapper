@@ -12,6 +12,9 @@ export default function Sidebar() {
                     {/* <div className="hover:text-blue-400 cursor-pointer">Messages</div> */}
                     <div className="hover:text-blue-400 cursor-pointer">Profile</div>
                     <LogoutButton />
+                    <button className="w-full bg-blue-500 py-2 rounded-full font-semibold hover:bg-blue-600">
+                        Post
+                    </button>
                 </nav>
             </div>
             <div className="text-sm text-gray-400">@username</div>

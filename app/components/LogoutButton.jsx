@@ -18,7 +18,7 @@ export default function LogoutButton() {
     if (!session) return null;
 
     return (
-        <button className="w-full bg-amber-800 py-1.5 rounded-full font-semibold hover:bg-blue-600"
+        <button className="hover:text-blue-400 cursor-pointer"
             onClick={handleSignOut}
         >
             Logout
