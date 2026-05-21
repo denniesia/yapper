@@ -3,7 +3,7 @@
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 
-export default function TweetInput({onTweetPosted }) {
+export default function TweetInput({ onTweetPosted }) {
     const [content, setContent] = useState("");
     const { data: session, status } = useSession();
 
@@ -22,7 +22,7 @@ export default function TweetInput({onTweetPosted }) {
             headers: {
                 "Content-Type": "application/json",
             },
-            
+
         });
 
         if (response.ok) {
@@ -37,20 +37,14 @@ export default function TweetInput({onTweetPosted }) {
 
     return (
         <div className="p-4 border-b border-gray-800 flex space-x-4">
-
-            {/* AVATAR IMAGE */}
             <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-700 flex items-center justify-center">
-                {session?.user?.image &&
-                    <img
-                        src={session.user.image}
-                        alt="avatar"
-                        className="w-full h-full object-cover"
-                    />
-
-                }
+                <img
+                    src={session.user.image || 'https://media.idownloadblog.com/wp-content/uploads/2017/03/Twitter-new-2017-avatar-001.png'}
+                    alt="avatar"
+                    className="w-full h-full object-cover"
+                />
             </div>
 
-            {/* INPUT */}
             <div className="flex-1">
                 <input
                     className="w-full bg-transparent outline-none text-lg"

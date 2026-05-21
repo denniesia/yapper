@@ -65,7 +65,9 @@ export async function GET() {
 	try {
 		await makeSureDbIsReady();
 
-		const tweets = await Tweet.find().sort({
+		const tweets = await Tweet.find()
+		.populate("author", "name username image")
+		.sort({
 			createdAt: -1,
 		});
 

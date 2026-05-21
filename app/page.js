@@ -8,19 +8,19 @@ import { getTweets } from "./lib/getTweets";
 import { authOptions } from "./api/auth/[...nextauth]/route";
 
 export default async function HomePage() {
-	const session = await getServerSession(authOptions);
+  const session = await getServerSession(authOptions);
 
-	if (!session) {
-		redirect("/login");
-	}
+  if (!session) {
+    redirect("/login");
+  }
 
-	const tweets = await getTweets();
-
-	return (
-		<div className="flex min-h-screen bg-black text-white">
-			<Sidebar />
-			<Feed tweets={tweets} />
-			<RightSidebar />
-		</div>
-	);
+  const tweets = await getTweets();
+  
+  return (
+    <div className="flex min-h-screen bg-black text-white">
+      <Sidebar />
+      <Feed tweets={tweets} />
+      <RightSidebar />
+    </div>
+  );
 }

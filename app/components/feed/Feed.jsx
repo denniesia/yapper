@@ -12,7 +12,7 @@ export default function Feed({ tweets }) {
     const handleTweetPosted = () => {
         router.refresh();
     }
-
+    
     return (
         <main className="flex-1 border-r border-gray-800 max-w-3xl">
             <div className="p-4 border-b border-gray-800 text-3xl font-bold">
