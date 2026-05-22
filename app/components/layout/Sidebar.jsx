@@ -1,6 +1,8 @@
 "use client"
 import { useSession } from "next-auth/react";
 import LogoutButton from "../LogoutButton"
+import Link from "next/link";
+
 
 export default function Sidebar() {
 
@@ -29,9 +31,9 @@ export default function Sidebar() {
                     {/* <div className="hover:text-blue-400 cursor-pointer">Messages</div> */}
                     <div className="flex items-center gap-2 hover:text-blue-400 cursor-pointer mt-auto" >
                         <img src="/images/profile.png" className="w-6 h-6" />
-                        <a href="">
+                        <Link href="/profile">
                             Profile
-                        </a>
+                        </Link>
                     </div>
                     <LogoutButton />
                     <button className="w-full bg-blue-500 py-2 rounded-full font-semibold hover:bg-blue-600">

@@ -2,6 +2,8 @@
 
 import { useSession } from "next-auth/react";
 import { useState } from "react";
+import Link from "next/link";
+
 
 export default function TweetInput({ onTweetPosted }) {
     const [content, setContent] = useState("");
@@ -38,11 +40,15 @@ export default function TweetInput({ onTweetPosted }) {
     return (
         <div className="p-4 border-b border-gray-800 flex space-x-4">
             <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-700 flex items-center justify-center">
-                <img
-                    src={session.user.image || 'https://media.idownloadblog.com/wp-content/uploads/2017/03/Twitter-new-2017-avatar-001.png'}
-                    alt="avatar"
-                    className="w-full h-full object-cover"
-                />
+                <Link href="/profile">
+                    <img
+                        src={session.user.image || 'https://media.idownloadblog.com/wp-content/uploads/2017/03/Twitter-new-2017-avatar-001.png'}
+                        alt="avatar"
+                        className="w-full h-full object-cover"
+                    />
+                </Link>
+
+
             </div>
 
             <div className="flex-1">
