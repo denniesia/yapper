@@ -15,7 +15,7 @@ export default function Feed({ tweets }) {
 
     return (
         <main className="flex-1 border-r border-gray-800 max-w-3xl">
-            <div className="p-4 border-b border-gray-800 text-3xl font-bold">
+            <div className="p-4 border-b border-gray-800 text-3xl font-bold mb-4">
                 Home
 
             </div>

@@ -18,9 +18,10 @@ export default function LogoutButton() {
     if (!session) return null;
 
     return (
-        <button className="hover:text-blue-400 cursor-pointer"
+        <button className="flex items-center gap-2 hover:text-blue-400 cursor-pointer mt-auto" 
             onClick={handleSignOut}
         >
+            <img src="/images/logout.png" className="w-6 h-6" />
             Logout
         </button>
     );
