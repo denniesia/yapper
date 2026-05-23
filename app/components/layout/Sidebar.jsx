@@ -18,8 +18,11 @@ export default function Sidebar() {
     return (
         <aside className="w-64 p-6 border-r border-gray-800 hidden md:flex flex-col justify-between">
             <div className="space-y-10">
-                <h1 className="text-3xl font-bold">yapper</h1>
-                <nav className="space-y-5 text-lg">
+                <Link href='/'>
+                      <h1 className="text-3xl font-bold">yapper</h1>
+                </Link>
+              
+                <nav className="space-y-5 text-lg mt-8">
                     <div className="flex items-center gap-2 hover:text-blue-400 cursor-pointer mt-auto" >
                         <img src="/images/home.png" className="w-6 h-6" />
                         <a href="/">
