@@ -8,6 +8,7 @@
 - Liking tweets
 - Commenting on Tweets
 - Authentication System - JW and Github
+- Profile Page
 
 ### Technical Stack:
 - React JS
