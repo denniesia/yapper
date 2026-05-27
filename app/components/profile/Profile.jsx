@@ -28,7 +28,7 @@ export default async function Profile() {
                     {/* Profile Image */}
                     <div className="absolute -bottom-18 left-4">
                         <img
-                            src={session.user.image ||'https://media.idownloadblog.com/wp-content/uploads/2017/03/Twitter-new-2017-avatar-001.png' }
+                            src={session.user.image || 'https://media.idownloadblog.com/wp-content/uploads/2017/03/Twitter-new-2017-avatar-001.png' }
                             alt="Profile"
                             className="w-36 h-36 rounded-full border-4 border-black object-cover"
                         />
