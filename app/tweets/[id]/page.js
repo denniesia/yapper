@@ -19,21 +19,15 @@ export default async function TweetPage({ params }) {
 
 	return (
 		<div className="flex min-h-screen bg-black text-white">
-            <Sidebar/>
-			{/* <h1>{tweet.title}</h1> */}
-
+			<Sidebar />
 			<main className="flex-1 border-r border-gray-800 max-w-3xl">
-                        <div className="p-4 border-b border-gray-800 text-3xl font-bold mb-4">
-                            Tweet
-            
-                        </div>
-            
-                        <TweetCard tweet={tweet} />
-            
-                    </main>
+				<div className="p-4 border-b border-gray-800 text-3xl font-bold mb-4">
+					Tweet
+				</div>
+				<TweetCard tweet={tweet} />
+			</main>
 
-			<p>{/* 👍 {tweet.reactions.likes} | 👎 {tweet.reactions.dislikes} */}</p>
-            <RightSidebar />
-        </div>
+			<RightSidebar />
+		</div>
 	);
 }
