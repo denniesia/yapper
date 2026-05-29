@@ -9,6 +9,8 @@
 - Commenting on Tweets
 - Authentication System - JW and Github
 - Profile Page
+- Tweet Details Page
+
 
 ### Technical Stack:
 - React JS
