@@ -1,24 +1,29 @@
 import mongoose from "mongoose";
 
 const ReplySchema = new mongoose.Schema(
-    {
-        content: {
-            type: String,
-            require: true,
-            maxlength: 280
-        },
-        author: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User",
-            required: true,
-        }
-    },
-    {
-        timestamp: true,
-    }
-)
+	{
+		content: {
+			type: String,
+			required: true,
+			maxlength: 280,
+		},
+		author: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "User",
+			required: true,
+		},
+		tweet: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Tweet",
+			required: true,
+		},
+	},
 
+	{
+		timestamps: true,
+	},
+);
 
-const Reply = mongoose.models.Reply ?? mongoose.model("Reply", ReplySchema);
+const Reply = mongoose.models.Reply || mongoose.model("Reply", ReplySchema);
 
 export default Reply;
