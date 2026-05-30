@@ -7,8 +7,15 @@ export async function GET(request, { params }) {
     
     const { id } = await params;
     
-    // Remove any session checking here
-    const tweet = await Tweet.findById(id).populate("author", "name username image");
+    const tweet = await Tweet.findById(id)
+  .populate("author")
+  .populate({
+    path: "replies",
+    populate: {
+      path: "author",
+      select: "name username image",
+    },
+  });
     
     if (!tweet) {
       return Response.json(
