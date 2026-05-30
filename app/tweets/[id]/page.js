@@ -1,6 +1,6 @@
 import RightSidebar from "../../components/layout/RightSidebar";
 import Sidebar from "../../components/layout/Sidebar";
-import TweetCard from "../../components/tweet/TweetCard";
+import TweetDetailsCard from "../../components/tweet/TweetDetailsCard";
 
 async function getTweet(id) {
 	const res = await fetch(`http://localhost:3001/api/tweets/${id}`);
@@ -24,7 +24,7 @@ export default async function TweetPage({ params }) {
 				<div className="p-4 border-b border-gray-800 text-3xl font-bold mb-4">
 					Tweet
 				</div>
-				<TweetCard tweet={tweet} />
+				<TweetDetailsCard tweet={tweet} />
 			</main>
 
 			<RightSidebar />

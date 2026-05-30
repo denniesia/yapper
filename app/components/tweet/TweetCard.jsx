@@ -26,6 +26,7 @@ export default function TweetCard({ tweet }) {
                 <p className="mt-2">
                     {tweet.content}
                 </p>
+            
             </div>
             </Link>
         </div>
