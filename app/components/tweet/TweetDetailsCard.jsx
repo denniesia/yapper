@@ -7,29 +7,33 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
-export default function TweetCard({ tweet }) {
+export default function TweetDetailsCard({ tweet }) {
     const { data: session, status } = useSession();
 
     const [reply, setReply] = useState("");
+    const router = useRouter();
 
-    const handleReply = async () => {
+    async function saveReply() {
         if (!reply.trim()) return;
 
         try {
-            await fetch(`/api/tweets/${tweet._id}/reply`, {
+            await fetch(`/api/tweets/${tweet._id}/replies`, {
                 method: "POST",
+                body: JSON.stringify({
+                    content: reply,
+                    author: session.user.id,
+                }),
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({
-                    content: reply,
-                }),
+
             });
 
             setReply("");
+            router.refresh();
 
-            // refresh replies
         } catch (error) {
             console.error(error);
         }
@@ -45,6 +49,7 @@ export default function TweetCard({ tweet }) {
         "h:mm a · MMM d, yyyy"
     );
 
+    console.log(tweet.replies)
     return (
         <>
             <div className="max-w-3xl mx-auto border-b border-gray-800 p-6">
@@ -113,7 +118,7 @@ export default function TweetCard({ tweet }) {
                 </div>
 
             </div>
-            <div className="border-b border-gray-800 p-4">
+            {session?.user && <div className="border-b border-gray-800 p-4">
                 <div className="flex gap-3">
                     <img
                         src={session.user.image || 'https://media.idownloadblog.com/wp-content/uploads/2017/03/Twitter-new-2017-avatar-001.png'}
@@ -140,7 +145,7 @@ export default function TweetCard({ tweet }) {
 
                         <div className="flex justify-end mt-1">
                             <button
-                                onClick={handleReply}
+                                onClick={saveReply}
                                 disabled={!reply.trim()}
                                 className="
                                     bg-blue-500
@@ -160,7 +165,23 @@ export default function TweetCard({ tweet }) {
                     </div>
                 </div>
             </div>
+            }
 
+            {/* Replies */}
+            <div>
+                {tweet.replies?.map((r) => (
+                    <div key={r._id} className="flex gap-3 p-4 border-b border-gray-800">
+                        <img src={r.author?.image} className="w-10 h-10 rounded-full object-cover" />
+                        <div className="flex-1"> <div className="flex gap-2 items-center">
+                            <span className="font-semibold text-white text-sm"> {r.author?.name} </span>
+                            <span className="text-gray-500 text-sm"> @{r.author?.username} </span>
+                            {/* <span className="text-gray-600 text-xs"> · {formatDistanceToNow(new Date(r.createdAt), { addSuffix: true })} </span> */}
+                        </div>
+                            <p className="text-white mt-1 text-sm"> {r.content} </p>
+                        </div>
+                    </div>))}
+            </div>
+        
         </>
 
     );
