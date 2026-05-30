@@ -28,6 +28,18 @@ const UserSchema = new mongoose.Schema(
 			type: String,
 			default: "",
 		},
+		tweets: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "Tweet",
+			},
+		],
+		likedTweets: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "Tweet",
+			},
+		],
 	},
 	{ timestamps: true },
 );

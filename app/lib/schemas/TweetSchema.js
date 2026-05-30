@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import ReplySchema from "./ReplySchema"
 
 const TweetSchema = new mongoose.Schema(
 	{
@@ -11,12 +12,16 @@ const TweetSchema = new mongoose.Schema(
 		author: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "User",
+			required: true,
 		},
 
-		likes: {
-			type: Number,
-			default: 0,
-		},
+		replies: [ReplySchema],
+		likes : [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "User"
+			}
+		]
 	},
 	{
 		timestamps: true,
