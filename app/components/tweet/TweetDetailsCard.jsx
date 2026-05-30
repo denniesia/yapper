@@ -175,7 +175,7 @@ export default function TweetDetailsCard({ tweet }) {
                         <div className="flex-1"> <div className="flex gap-2 items-center">
                             <span className="font-semibold text-white text-sm"> {r.author?.name} </span>
                             <span className="text-gray-500 text-sm"> @{r.author?.username} </span>
-                            {/* <span className="text-gray-600 text-xs"> · {formatDistanceToNow(new Date(r.createdAt), { addSuffix: true })} </span> */}
+                            <span className="text-gray-600 text-xs"> · {formatDistanceToNow(new Date(r.createdAt), { addSuffix: true })} </span>
                         </div>
                             <p className="text-white mt-1 text-sm"> {r.content} </p>
                         </div>
