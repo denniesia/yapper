@@ -3,10 +3,9 @@
 
 ### Features: 
 - Browsing Tweets
-- Filtering Tweets
 - CRUD operations on Tweets
 - Liking tweets
-- Commenting on Tweets
+- Replying on Tweets
 - Authentication System - JW and Github
 - Profile Page
 - Tweet Details Page
