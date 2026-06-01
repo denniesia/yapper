@@ -59,3 +59,26 @@ export async function GET(req, { params }) {
     );
   }
 }
+
+export async function GET(req, { params }) {
+	try {
+		await makeSureDbIsReady();
+
+		const { id } = await params;
+
+		const deletedReply = await Reply.findByIdAndDelete(id);
+
+		if (!deletedReply) {
+			return Response.json({ error: "Reply not found" }, { status: 404 });
+		}
+
+		return Response.json(
+			{ message: "Reply deleted successfully" },
+			{ status: 200 },
+		);
+	} catch (error) {
+		console.log("GET ERROR:", error);
+
+		return Response.json({ error: error.message }, { status: 500 });
+	}
+}

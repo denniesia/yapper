@@ -109,10 +109,10 @@ export default function TweetDetailsCard({ tweet }) {
 
                 {/* Actions */}
                 <div className="flex justify-around mt-4 text-gray-500">
-                    <button className="hover:text-blue-400 transition">
+                    <button className="hover:text-blue-400 transition cursor-pointer">
                         <MessageCircle size={20} />
                     </button>
-                    <button className="hover:text-pink-500 transition">
+                    <button className="hover:text-pink-500 transition cursor-pointer">
                         <Heart size={20} />
                     </button>
                 </div>
