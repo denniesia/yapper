@@ -9,7 +9,7 @@ export default function TweetInput({ onTweetPosted }) {
     const [content, setContent] = useState("");
     const { data: session, status } = useSession();
 
-    if (status === "loading") return null;
+    
     if (!session) return null;
 
     async function saveTweet() {

@@ -8,6 +8,7 @@ import {
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import RepliesSection from "../reply/RepliesSection";
 
 export default function TweetDetailsCard({ tweet }) {
     const { data: session, status } = useSession();
@@ -49,7 +50,6 @@ export default function TweetDetailsCard({ tweet }) {
         "h:mm a · MMM d, yyyy"
     );
 
-    console.log(tweet.replies)
     return (
         <>
             <div className="max-w-3xl mx-auto border-b border-gray-800 p-6">
@@ -167,22 +167,8 @@ export default function TweetDetailsCard({ tweet }) {
             </div>
             }
 
-            {/* Replies */}
-            <div>
-                {tweet.replies?.map((r) => (
-                    <div key={r._id} className="flex gap-3 p-4 border-b border-gray-800">
-                        <img src={r.author?.image} className="w-10 h-10 rounded-full object-cover" />
-                        <div className="flex-1"> 
-                            <div className="flex gap-2 items-center">
-                                <span className="font-semibold text-white text-sm"> {r.author?.name} </span>
-                                <span className="text-gray-500 text-sm"> @{r.author?.username} </span>
-                                <span className="text-gray-600 text-xs"> · {formatDistanceToNow(new Date(r.createdAt), { addSuffix: true })} </span>
-                            </div>
-                            <p className="text-white mt-1 text-sm ml-3" > {r.content} </p>
-                        </div>
-                    </div>))}
-            </div>
-        
+            <RepliesSection tweet={tweet} />
+            
         </>
 
     );
