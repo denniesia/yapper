@@ -20,7 +20,7 @@ export default async function ProfilePage() {
     return (
         <div className="flex min-h-screen bg-black text-white">
             <Sidebar />
-            <Profile />
+            <Profile session={session} />
             <RightSidebar />
         </div>
     );

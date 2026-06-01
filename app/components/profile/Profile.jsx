@@ -1,8 +1,12 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "../../api/auth/[...nextauth]/route";
+"use client";
 
-export default async function Profile() {
-    const session = await getServerSession(authOptions);
+import { useState } from "react";
+import ProfileEditModal from "./ProfileEditModal";
+
+
+
+export default function Profile({ session }) {
+    const [showEditProfileModal, setShowEditProfileModal] = useState(false);
     
     if (!session) {
         redirect("/login");
@@ -38,14 +42,26 @@ export default async function Profile() {
                 {/* Profile Info */}
                 <div className="px-4 pt-10 pb-4 border-b border-gray-800">
                     <div className="flex justify-end">
-                        <button className="border border-gray-600 px-5 py-2 rounded-full font-semibold hover:bg-gray-900 transition">
+                        <button 
+                        onClick={() => setShowEditProfileModal(true)}
+                        className="border border-gray-600 px-5 py-2 rounded-full font-semibold hover:bg-gray-900 transition">
                             Edit profile
                         </button>
                     </div>
 
+                    {
+                        showEditProfileModal && (
+                            <ProfileEditModal
+                                onClose={() => setShowEditProfileModal(false)} 
+                                onSave={(data) => console.log(data)} 
+                                initialData={session.user}
+                            />
+                        )
+                    }
+
                     <div className="mt-2">
-                        <h2 className="text-2xl font-bold">Dennis</h2>
-                        <p className="text-gray-500">@dennisdev</p>
+                        <h2 className="text-2xl font-bold">@{session.user?.name}</h2>
+                        <p className="text-gray-500 mt-1">{session.user?.email}</p>
                     </div>
 
                     <p className="mt-3 text-gray-200">
