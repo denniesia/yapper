@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 
-import Reply from "./ReplySchema";
 
 const TweetSchema = new mongoose.Schema(
 	{
