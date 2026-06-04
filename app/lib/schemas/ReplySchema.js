@@ -17,8 +17,13 @@ const ReplySchema = new mongoose.Schema(
 			ref: "Tweet",
 			required: true,
 		},
+		likes: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "User",
+			},
+		],
 	},
-
 	{
 		timestamps: true,
 	},
