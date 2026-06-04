@@ -1,33 +1,28 @@
 import Tweet from "../lib/schemas/TweetSchema";
+import { makeSureDbIsReady } from "./db";
 
 export async function toggleLike(tweetId, userId) {
-	const alreadyLiked = await Tweet.exists({
-		_id: tweetId,
-		likes: userId,
-	});
 
-	let updatedTweet;
+    await makeSureDbIsReady();
+
+    const tweet = await Tweet.findById(tweetId);
+    if (!tweet) {
+        throw new Error("Tweet not found");
+    }   
+
+	const alreadyLiked = tweet.likes.some((id) => id.toString() === userId);
+
 
 	if (alreadyLiked) {
-		updatedTweet = await Tweet.findByIdAndUpdate(
-			tweetId,
-			{
-				$pull: { likes: userId },
-			},
-			{ new: true }
-		);
-	} else {
-		updatedTweet = await Tweet.findByIdAndUpdate(
-			tweetId,
-			{
-				$addToSet: { likes: userId },
-			},
-			{ new: true }
-		);
-	}
+        tweet.likes.pull(userId);
+    } else {
+        tweet.likes.push(userId);
+    }
 
-	return {
-		liked: !alreadyLiked,
-		likesCount: updatedTweet.likes.length,
-	};
+    await tweet.save();
+
+    return {
+        liked: !alreadyLiked,
+        likesCount: tweet.likes.length,
+    };
 }
