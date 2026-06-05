@@ -46,7 +46,7 @@ export default function TweetCard({ tweet }) {
 
     return (
         <div className="p-4 border-b border-gray-800 flex space-x-4 hover:bg-gray-900">
-            <Link href={`/tweets/${tweet._id}`} className="flex space-x-4 flex-1">
+            <Link href={`/tweets/${tweet._id}?liked=${isLiked}`} className="flex space-x-4 flex-1">
                 <div className="w-12 h-12 bg-gray-700 rounded-full flex-shrink-0">
                     <img
                         className="w-12 h-12 rounded-full object-cover"

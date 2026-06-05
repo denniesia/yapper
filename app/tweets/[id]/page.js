@@ -7,11 +7,9 @@ async function getTweet(id) {
         `http://localhost:3001/api/tweets/${id}`
     );
 
-    console.log("STATUS:", res.status);
-
     if (!res.ok) {
-        const errorText = await res.text();
-        console.log(errorText);
+        // const errorText = await res.text();
+        // console.log(errorText);
 
         throw new Error(`Failed to fetch tweet: ${res.status}`);
     }
@@ -19,9 +17,10 @@ async function getTweet(id) {
     return res.json();
 }
 
-export default async function TweetPage({ params }) {
+export default async function TweetPage({ params, searchParams }) {
 	const { id } = await params;
-
+	const { liked } = await searchParams;
+	
 	const tweet = await getTweet(id);
 
 	return (
@@ -31,7 +30,7 @@ export default async function TweetPage({ params }) {
 				<div className="p-4 border-b border-gray-800 text-3xl font-bold mb-4">
 					Tweet
 				</div>
-				<TweetDetailsCard tweet={tweet} />
+				<TweetDetailsCard tweet={tweet} isLiked={liked} />
 			</main>
 
 			<RightSidebar />

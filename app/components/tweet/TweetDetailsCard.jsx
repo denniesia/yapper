@@ -5,16 +5,48 @@ import {
     MessageCircle,
     Heart
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import RepliesSection from "../reply/RepliesSection";
 
-export default function TweetDetailsCard({ tweet }) {
+export default function TweetDetailsCard({ tweet, liked }) {
+    const [isLiked, setIsLiked] = useState(liked);
+    const [countLikes, setCountLikes] = useState(
+        tweet.likes.length
+    );
+
     const { data: session, status } = useSession();
 
     const [reply, setReply] = useState("");
     const router = useRouter();
+
+    useEffect(() => {
+        if (!session?.user?.id) return;
+
+        setIsLiked(
+            tweet.likes.some(
+                (id) => id.toString() === session.user.id
+            )
+        );
+    }, [session, tweet.likes]);
+
+    async function handleLikeAction(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const res = await fetch(
+            `/api/tweets/${tweet._id}/like`,
+            {
+                method: "POST",
+            }
+        );
+
+        const data = await res.json();
+
+        setIsLiked(data.liked);
+        setCountLikes(data.likesCount);
+    }
 
     async function saveReply() {
         if (!reply.trim()) return;
@@ -101,7 +133,7 @@ export default function TweetDetailsCard({ tweet }) {
 
                     <span>
                         <strong className="text-white">
-                            {tweet.likes?.length || 0}
+                            {countLikes}
                         </strong>{" "}
                         <span className="text-gray-500">Likes</span>
                     </span>
@@ -109,11 +141,15 @@ export default function TweetDetailsCard({ tweet }) {
 
                 {/* Actions */}
                 <div className="flex justify-around mt-4 text-gray-500">
-                    <button className="hover:text-blue-400 transition cursor-pointer">
+                    <button className="hover:text-blue-400 transition cursor-pointer" >
                         <MessageCircle size={20} />
                     </button>
-                    <button className="hover:text-pink-500 transition cursor-pointer">
-                        <Heart size={20} />
+                    <button className="hover:text-pink-500 transition cursor-pointer" onClick={handleLikeAction}>
+                        {isLiked ? (
+                            <Heart size={20} color="#F23299" fill="#F23299" />
+                        ) : (
+                            <Heart size={20} />
+                        )}
                     </button>
                 </div>
 
@@ -168,7 +204,7 @@ export default function TweetDetailsCard({ tweet }) {
             }
 
             <RepliesSection tweet={tweet} />
-            
+
         </>
 
     );
