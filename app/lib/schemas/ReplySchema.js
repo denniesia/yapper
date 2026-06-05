@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import Tweet from "./TweetSchema"
+import User from "./UserSchema"
 
 const ReplySchema = new mongoose.Schema(
 	{
