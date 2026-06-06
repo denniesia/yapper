@@ -43,20 +43,22 @@ export default function TweetCard({ tweet }) {
 
         setIsLiked(data.liked);
     }
-
+    console.log(tweet.author)
     return (
         <div className="p-4 border-b border-gray-800 flex space-x-4 hover:bg-gray-900">
-            <Link href={`/tweets/${tweet._id}?liked=${isLiked}`} className="flex space-x-4 flex-1">
                 <div className="w-12 h-12 bg-gray-700 rounded-full flex-shrink-0">
-                    <img
-                        className="w-12 h-12 rounded-full object-cover"
-                        src={
-                            tweet.author.image ||
-                            "https://media.idownloadblog.com/wp-content/uploads/2017/03/Twitter-new-2017-avatar-001.png"
-                        }
-                        alt=""
-                    />
+                    <Link href={`/users/${tweet.author._id}`}>
+                        <img
+                            className="w-12 h-12 rounded-full object-cover"
+                            src={
+                                tweet.author.image ||
+                                "https://media.idownloadblog.com/wp-content/uploads/2017/03/Twitter-new-2017-avatar-001.png"
+                            }
+                            alt=""
+                        />
+                    </Link>
                 </div>
+                                        <Link href={`/tweets/${tweet._id}?liked=${isLiked}`} className="flex space-x-4 flex-1">
 
                 <div className="flex-1">
                     <div className="text-gray-400 text-sm">

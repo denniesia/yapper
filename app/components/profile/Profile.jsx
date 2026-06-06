@@ -8,9 +8,9 @@ import ProfileEditModal from "./ProfileEditModal";
 export default function Profile({ session }) {
     const [showEditProfileModal, setShowEditProfileModal] = useState(false);
     
-    if (!session) {
-        redirect("/login");
-    }
+    // if (!session) {
+    //     redirect("/login");
+    // }
 
     return (
         <div  className="flex-1 border-r border-gray-800 max-w-3xl">
