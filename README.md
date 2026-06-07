@@ -1,8 +1,7 @@
 #  Yapper - Twitter clone App
 
 
-### Features: 
-- Browsing Tweets
+### Features:
 - CRUD operations on Tweets
 - Liking tweets
 - Replying on Tweets
