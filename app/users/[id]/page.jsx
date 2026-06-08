@@ -6,12 +6,10 @@ import { redirect } from "next/navigation";
 import { authOptions } from "../../api/auth/[...nextauth]/route";
 
 export default async function ProfilePage({ params }) {
-  const { id } = await params;
-   const session = await getServerSession(authOptions);
+    const { id } = await params;
   
-      if (!session) {
-          redirect("/login");
-      }
+  
+      
 
   const res = await fetch(
     `http://localhost:3001/api/users/${id}`
@@ -22,7 +20,7 @@ export default async function ProfilePage({ params }) {
   return (
          <div className="flex min-h-screen bg-black text-white">
              <Sidebar />
-             <Profile session={session}  />
+             <Profile  user={user} />
              <RightSidebar />
          </div>
      );

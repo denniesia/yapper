@@ -5,26 +5,28 @@ import ProfileEditModal from "./ProfileEditModal";
 
 
 
-export default function Profile({ session }) {
+export default function Profile( {user}) {
     const [showEditProfileModal, setShowEditProfileModal] = useState(false);
+    console.log(user)
     
     // if (!session) {
     //     redirect("/login");
     // }
 
     return (
+  
         <div  className="flex-1 border-r border-gray-800 max-w-3xl">
             <div  className="flex-1 border-r border-gray-800 max-w-3xl">
                 {/* Header */}
                 <div className="sticky top-0 z-10 bg-black/80 backdrop-blur border-b border-gray-800 px-4 py-3">
-                    <h1 className="text-2xl font-bold ml-4">{session.user.name || session.user.username}</h1>
+                    <h1 className="text-2xl font-bold ml-4">{user.name || user.username}</h1>
                     <p className="text-sm text-gray-500 ml-4">124 posts</p>
                 </div>
 
                 {/* Banner */}
                 <div className="h-52 bg-gray-700 relative">
                     <img
-                        src={session.user.banner || "https://images.unsplash.com/photo-1729575846511-f499d2e17d79?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}
+                        src={user.banner || "https://images.unsplash.com/photo-1729575846511-f499d2e17d79?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}
                         alt="Banner"
                         className="w-full h-full object-cover"
                     />
@@ -32,7 +34,7 @@ export default function Profile({ session }) {
                     {/* Profile Image */}
                     <div className="absolute -bottom-18 left-4">
                         <img
-                            src={session.user.image || 'https://media.idownloadblog.com/wp-content/uploads/2017/03/Twitter-new-2017-avatar-001.png' }
+                            src={user.image || 'https://media.idownloadblog.com/wp-content/uploads/2017/03/Twitter-new-2017-avatar-001.png' }
                             alt="Profile"
                             className="w-36 h-36 rounded-full border-4 border-black object-cover"
                         />
@@ -54,14 +56,14 @@ export default function Profile({ session }) {
                             <ProfileEditModal
                                 onClose={() => setShowEditProfileModal(false)} 
                                 onSave={(data) => console.log(data)} 
-                                initialData={session.user}
+                                initialData={user}
                             />
                         )
                     }
 
                     <div className="mt-2">
-                        <h2 className="text-2xl font-bold">@{session.user?.name}</h2>
-                        <p className="text-gray-500 mt-1">{session.user?.email}</p>
+                        <h2 className="text-2xl font-bold">@{user?.name || user?.username }</h2>
+                        <p className="text-gray-500 mt-1">{user?.email}</p>
                     </div>
 
                     <p className="mt-3 text-gray-200">
