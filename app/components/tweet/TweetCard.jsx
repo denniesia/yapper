@@ -43,7 +43,7 @@ export default function TweetCard({ tweet }) {
 
         setIsLiked(data.liked);
     }
-    console.log(tweet.author)
+    
     return (
         <div className="p-4 border-b border-gray-800 flex space-x-4 hover:bg-gray-900">
                 <div className="w-12 h-12 bg-gray-700 rounded-full flex-shrink-0">
@@ -62,7 +62,7 @@ export default function TweetCard({ tweet }) {
 
                 <div className="flex-1">
                     <div className="text-gray-400 text-sm">
-                        @{tweet.author.username} · {createdTimeAgo}
+                        @{tweet.author.username || tweet.author.name} · {createdTimeAgo}
                     </div>
 
                     <p className="mt-2">{tweet.content}</p>

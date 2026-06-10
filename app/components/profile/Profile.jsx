@@ -1,22 +1,43 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProfileEditModal from "./ProfileEditModal";
+import TweetCard from "../tweet/TweetCard"
 
 
 
-export default function Profile( {user}) {
+export default function Profile({ user }) {
     const [showEditProfileModal, setShowEditProfileModal] = useState(false);
-    console.log(user)
-    
-    // if (!session) {
-    //     redirect("/login");
-    // }
+    const [userTweets, setUserTweets] = useState([]);
+    useEffect(() => {
+        async function fetchTweets() {
+            try {
+                const res = await fetch(
+                    `http://localhost:3001/api/tweets/user/${user._id}`
+                );
+
+                if (!res.ok) {
+                    throw new Error("Failed to fetch tweets");
+                }
+
+                const data = await res.json();
+
+                setUserTweets(data);
+            } catch (err) {
+                console.error(err);
+            }
+        }
+        if (user?._id) {
+            fetchTweets();
+        }
+    }, [user]);
+
+
 
     return (
-  
-        <div  className="flex-1 border-r border-gray-800 max-w-3xl">
-            <div  className="flex-1 border-r border-gray-800 max-w-3xl">
+
+        <div className="flex-1 border-r border-gray-800 max-w-3xl">
+            <div className="flex-1 border-r border-gray-800 max-w-3xl">
                 {/* Header */}
                 <div className="sticky top-0 z-10 bg-black/80 backdrop-blur border-b border-gray-800 px-4 py-3">
                     <h1 className="text-2xl font-bold ml-4">{user.name || user.username}</h1>
@@ -34,7 +55,7 @@ export default function Profile( {user}) {
                     {/* Profile Image */}
                     <div className="absolute -bottom-18 left-4">
                         <img
-                            src={user.image || 'https://media.idownloadblog.com/wp-content/uploads/2017/03/Twitter-new-2017-avatar-001.png' }
+                            src={user.image || 'https://media.idownloadblog.com/wp-content/uploads/2017/03/Twitter-new-2017-avatar-001.png'}
                             alt="Profile"
                             className="w-36 h-36 rounded-full border-4 border-black object-cover"
                         />
@@ -44,9 +65,9 @@ export default function Profile( {user}) {
                 {/* Profile Info */}
                 <div className="px-4 pt-10 pb-4 border-b border-gray-800">
                     <div className="flex justify-end">
-                        <button 
-                        onClick={() => setShowEditProfileModal(true)}
-                        className="border border-gray-600 px-5 py-2 rounded-full font-semibold hover:bg-gray-900 transition">
+                        <button
+                            onClick={() => setShowEditProfileModal(true)}
+                            className="border border-gray-600 px-5 py-2 rounded-full font-semibold hover:bg-gray-900 transition">
                             Edit profile
                         </button>
                     </div>
@@ -54,15 +75,15 @@ export default function Profile( {user}) {
                     {
                         showEditProfileModal && (
                             <ProfileEditModal
-                                onClose={() => setShowEditProfileModal(false)} 
-                                onSave={(data) => console.log(data)} 
+                                onClose={() => setShowEditProfileModal(false)}
+                                onSave={(data) => console.log(data)}
                                 initialData={user}
                             />
                         )
                     }
 
                     <div className="mt-2">
-                        <h2 className="text-2xl font-bold">@{user?.name || user?.username }</h2>
+                        <h2 className="text-2xl font-bold">@{user?.name || user?.username}</h2>
                         <p className="text-gray-500 mt-1">{user?.email}</p>
                     </div>
 
@@ -102,38 +123,10 @@ export default function Profile( {user}) {
 
                 {/* Posts */}
                 <div>
-                    {[1, 2, 3].map((post) => (
-                        <div
-                            key={post}
-                            className="flex gap-3 px-4 py-4 border-b border-gray-800 hover:bg-gray-950 transition cursor-pointer"
-                        >
-                            <img
-                                src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop"
-                                alt="Avatar"
-                                className="w-12 h-12 rounded-full object-cover"
-                            />
-
-                            <div className="flex-1">
-                                <div className="flex items-center gap-2">
-                                    <span className="font-bold">Dennis</span>
-                                    <span className="text-gray-500">@dennisdev</span>
-                                    <span className="text-gray-500">·</span>
-                                    <span className="text-gray-500">2h</span>
-                                </div>
-
-                                <p className="mt-1 text-gray-200">
-                                    Just finished building my Twitter clone with Next.js 🚀
-                                </p>
-
-                                <div className="flex justify-between max-w-md mt-4 text-gray-500 text-sm">
-                                    <button className="hover:text-blue-400">💬 24</button>
-                                    <button className="hover:text-green-400">🔁 12</button>
-                                    <button className="hover:text-pink-400">❤️ 230</button>
-                                    <button className="hover:text-blue-400">📤</button>
-                                </div>
-                            </div>
-                        </div>
+                    {userTweets.map(tweet => (
+                        <TweetCard key={tweet._id} tweet={tweet} />
                     ))}
+
                 </div>
             </div>
         </div>

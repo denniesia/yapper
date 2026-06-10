@@ -2,13 +2,11 @@ import { ObjectId } from "mongodb";
 import { makeSureDbIsReady } from "../../lib/db";
 import Tweet from "../../lib/schemas/TweetSchema";
 import { getServerSession } from "next-auth";
-
-
-
+import User from "../../lib/schemas/UserSchema";
 
 export async function POST(req) {
 	try {
-        const session = await getServerSession();
+		const session = await getServerSession();
 		await makeSureDbIsReady();
 
 		const body = await req.json();
@@ -26,23 +24,28 @@ export async function POST(req) {
 			);
 		}
 
-        let authorId;
-        try {
-            authorId = new ObjectId(author);
-        } catch (err) {
-            return new Response(JSON.stringify({ 
-                error: "Invalid author ID format" 
-            }), {
-                status: 400,
-                headers: { "Content-Type": "application/json" }
-            });
-        }
+		let authorId;
+		try {
+			authorId = new ObjectId(author);
+		} catch (err) {
+			return new Response(
+				JSON.stringify({
+					error: "Invalid author ID format",
+				}),
+				{
+					status: 400,
+					headers: { "Content-Type": "application/json" },
+				},
+			);
+		}
 
 		const newTweet = await Tweet.create({
 			author: authorId,
 			content: content.trim(),
 		});
-        
+		await User.findByIdAndUpdate(authorId, {
+			$push: { tweets: newTweet._id },
+		});
 
 		return Response.json(newTweet, {
 			status: 201,
@@ -66,10 +69,10 @@ export async function GET() {
 		await makeSureDbIsReady();
 
 		const tweets = await Tweet.find()
-		.populate("author", "name username image")
-		.sort({
-			createdAt: -1,
-		});
+			.populate("author", "name username image")
+			.sort({
+				createdAt: -1,
+			});
 
 		return Response.json(tweets, {
 			status: 200,

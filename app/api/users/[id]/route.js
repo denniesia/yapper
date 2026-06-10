@@ -4,7 +4,7 @@ import User from "../../../lib/schemas/UserSchema";
 
 export async function GET(req, { params }) {
     await makeSureDbIsReady();
-      console.log("params:", params);
+    
   const { id } = await params;
 
   const user = await User.findById(id);
