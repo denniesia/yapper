@@ -32,6 +32,32 @@ export default function Profile({ user }) {
         }
     }, [user]);
 
+    const handleSaveProfile = async (data) => {
+        try {
+            const res = await fetch(`http://localhost:3001/api/users/${user._id}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    name: data.name,
+                    bio: data.bio,
+                    location: data.location,
+                }),
+            });
+          
+            if (!res.ok) throw new Error("Failed to update profile");
+
+            const updatedUser = await res.json();
+
+            // optional: update UI instantly
+            console.log("Updated user:", updatedUser);
+
+            setShowEditProfileModal(false);
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
 
     return (
@@ -76,7 +102,7 @@ export default function Profile({ user }) {
                         showEditProfileModal && (
                             <ProfileEditModal
                                 onClose={() => setShowEditProfileModal(false)}
-                                onSave={(data) => console.log(data)}
+                                onSave={handleSaveProfile}
                                 initialData={user}
                             />
                         )

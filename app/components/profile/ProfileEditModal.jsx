@@ -12,8 +12,8 @@ export default function ProfileEditModal({ onClose, onSave, initialData }) {
         website: "",
         birthdate: "",
     });
+    const [formData, setFormData] = useState(initialData);
 
-    // 🔥 Load initial data when modal opens / data changes
     useEffect(() => {
         if (!initialData) return;
 
@@ -27,15 +27,16 @@ export default function ProfileEditModal({ onClose, onSave, initialData }) {
     }, [initialData]);
 
     const handleChange = (e) => {
+        const { name, value } = e.target;
+
         setForm((prev) => ({
             ...prev,
-            [e.target.name]: e.target.value,
+            [name]: value,
         }));
     };
 
-    const handleSave = () => {
-        onSave?.(form);
-        onClose?.();
+    const handleSubmit = () => {
+        onSave(form);
     };
 
     return (
@@ -62,7 +63,7 @@ export default function ProfileEditModal({ onClose, onSave, initialData }) {
                     </h2>
 
                     <button
-                        onClick={handleSave}
+                        onClick={handleSubmit}
                         className="bg-white text-black px-4 py-1 rounded-full font-semibold text-sm"
                     >
                         Save
