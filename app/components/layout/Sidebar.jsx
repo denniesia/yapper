@@ -34,7 +34,7 @@ export default function Sidebar() {
                     {/* <div className="hover:text-blue-400 cursor-pointer">Messages</div> */}
                     <div className="flex items-center gap-2 hover:text-blue-400 cursor-pointer mt-auto" >
                         <img src="/images/profile.png" className="w-6 h-6" />
-                        <Link href="/profile">
+                        <Link href={`/users/${session?.user.id}`}>
                             Profile
                         </Link>
                     </div>
