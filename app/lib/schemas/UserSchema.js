@@ -48,6 +48,10 @@ const UserSchema = new mongoose.Schema(
 			type: String,
 			default: "",
 		},
+		banner: {
+			type: String,
+			default: "",
+		},
 		tweets: [
 			{
 				type: mongoose.Schema.Types.ObjectId,
