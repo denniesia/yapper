@@ -3,12 +3,23 @@
 import { useEffect, useState } from "react";
 import ProfileEditModal from "./ProfileEditModal";
 import TweetCard from "../tweet/TweetCard"
+import { useRouter } from "next/navigation";
+
 
 
 
 export default function Profile({ user }) {
     const [showEditProfileModal, setShowEditProfileModal] = useState(false);
     const [userTweets, setUserTweets] = useState([]);
+
+    const router = useRouter();
+
+    const createdAt = new Date(user.createdAt).toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+    });
+
     useEffect(() => {
         async function fetchTweets() {
             try {
@@ -43,17 +54,20 @@ export default function Profile({ user }) {
                     name: data.name,
                     bio: data.bio,
                     location: data.location,
+                    image: data.image,
+                    banner: data.banner
                 }),
             });
-          
+
             if (!res.ok) throw new Error("Failed to update profile");
 
             const updatedUser = await res.json();
 
-            // optional: update UI instantly
             console.log("Updated user:", updatedUser);
 
             setShowEditProfileModal(false);
+            router.refresh();
+
         } catch (err) {
             console.error(err);
         }
@@ -67,7 +81,7 @@ export default function Profile({ user }) {
                 {/* Header */}
                 <div className="sticky top-0 z-10 bg-black/80 backdrop-blur border-b border-gray-800 px-4 py-3">
                     <h1 className="text-2xl font-bold ml-4">{user.name || user.username}</h1>
-                    <p className="text-sm text-gray-500 ml-4">124 posts</p>
+                    <p className="text-sm text-gray-500 ml-4">{user.tweets.length} posts</p>
                 </div>
 
                 {/* Banner */}
@@ -109,20 +123,20 @@ export default function Profile({ user }) {
                     }
 
                     <div className="mt-2">
-                        <h2 className="text-2xl font-bold">@{user?.name || user?.username}</h2>
+                        <h2 className="text-2xl font-bold">@{user?.username}</h2>
                         <p className="text-gray-500 mt-1">{user?.email}</p>
                     </div>
 
                     <p className="mt-3 text-gray-200">
-                        Full-stack developer building cool stuff with Next.js and Tailwind CSS.
+                        {user.bio}
                     </p>
 
                     <div className="flex flex-wrap gap-4 text-gray-500 text-sm mt-3">
-                        <div>📍 Germany</div>
-                        <div>📅 Joined May 2026</div>
+                        {user.location && <div>📍 {user.location}</div>}
+                        {user.createdAt && <div>📅 Joined {createdAt}</div>}
                     </div>
 
-                    <div className="flex gap-5 mt-4 text-sm">
+                    {/* <div className="flex gap-5 mt-4 text-sm">
                         <div>
                             <span className="font-bold text-white">312</span>{" "}
                             <span className="text-gray-500">Following</span>
@@ -131,7 +145,7 @@ export default function Profile({ user }) {
                             <span className="font-bold text-white">12.4K</span>{" "}
                             <span className="text-gray-500">Followers</span>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
 
                 {/* Tabs */}

@@ -29,7 +29,9 @@ export async function PATCH(req, { params }) {
             {
                 name: body.name,
                 bio: body.bio,
-                location: body.location
+                location: body.location,
+                image: body.image,
+                banner: body.banner
             },
             { new: true }
         )

@@ -9,8 +9,8 @@ export default function ProfileEditModal({ onClose, onSave, initialData }) {
         name: "",
         bio: "",
         location: "",
-        website: "",
-        birthdate: "",
+        image: "",
+        banner: "",
     });
     const [formData, setFormData] = useState(initialData);
 
@@ -21,8 +21,9 @@ export default function ProfileEditModal({ onClose, onSave, initialData }) {
             name: initialData.name || "",
             bio: initialData.bio || "",
             location: initialData.location || "",
-            website: initialData.website || "",
-            birthdate: initialData.birthdate || "",
+            image: initialData.image || "",
+            banner: initialData.banner || ""
+            
         });
     }, [initialData]);
 
@@ -93,6 +94,16 @@ export default function ProfileEditModal({ onClose, onSave, initialData }) {
                 {/* Form */}
                 <div className="px-4 pt-12 pb-6 space-y-4">
                     <div>
+                        <label className="text-xs text-gray-400">Profile Image URL</label>
+                        <input
+                            type="url"
+                            name="image"
+                            value={form.image}
+                            onChange={handleChange}
+                            className="w-full bg-transparent border border-gray-700 rounded-md px-3 py-2 text-white"
+                        />
+                    </div>
+                    <div>
                         <label className="text-xs text-gray-400">Name</label>
                         <input
                             name="name"
@@ -121,6 +132,17 @@ export default function ProfileEditModal({ onClose, onSave, initialData }) {
                             className="w-full bg-transparent border border-gray-700 rounded-md px-3 py-2 text-white"
                         />
                     </div>
+                    <div>
+                        <label className="text-xs text-gray-400">Banner URL</label>
+                        <input
+                            type="url"
+                            name="banner"
+                            value={form.banner}
+                            onChange={handleChange}
+                            className="w-full bg-transparent border border-gray-700 rounded-md px-3 py-2 text-white"
+                        />
+                    </div>
+                    
                 </div>
             </div>
         </div>
