@@ -12,7 +12,13 @@ const UserSchema = new mongoose.Schema(
 			minlength: 3,
 			maxlength: 20,
 		},
-
+		name: {
+			type: String,
+			trim: true,
+			required: false,
+			minlength: 2,
+			maxlength: 50,
+		},
 		email: {
 			type: String,
 			required: true,
@@ -20,12 +26,24 @@ const UserSchema = new mongoose.Schema(
 			lowercase: true,
 			trim: true,
 		},
-
 		password: {
 			type: String,
 			required: false,
 		},
-
+		location: {
+			type: String,
+			trim: true,
+			required: false,
+			minlength: 2,
+			maxlength: 50,
+		},
+		bio: {
+			type: String,
+			required: false,
+			minlength: 2,
+			maxlength: 50,
+			trim: true,
+		},
 		image: {
 			type: String,
 			default: "",
