@@ -46,7 +46,6 @@ export default function RightSidebar() {
                             }
                             alt=""
                         />
-                            <div className="font-semibold">{user.name}</div>
                             <div className="text-gray-400 text-sm">@{user.username}</div>
                         </div>
                         <button className="bg-white text-black px-3 py-1 rounded-full text-sm hover:bg-blue-300 cursor-pointer">
