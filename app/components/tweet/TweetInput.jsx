@@ -1,15 +1,31 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
 
 export default function TweetInput({ onTweetPosted }) {
     const [content, setContent] = useState("");
+    const [ user, setUser ] = useState(null)
     const { data: session, status } = useSession();
 
-    if (!session) return null;
+
+    useEffect(() => {
+        if (!session?.user?.id) return;
+
+        async function fetchUser() {
+            const res = await fetch(`/api/users/${session.user.id}`)
+            const data = await res.json();
+            setUser(data);
+              console.log("USER", data)
+        }
+
+        fetchUser();
+    }, [session])
+
+  
+
 
     async function saveTweet() {
         if (!content.trim()) return;
@@ -36,12 +52,13 @@ export default function TweetInput({ onTweetPosted }) {
 
     }
 
+    console.log(session)
     return (
         <div className="p-4 border-b border-gray-800 flex space-x-4">
             <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-700 flex items-center justify-center">
-                <Link href={`/users/${session.user.id}`}>
+                <Link href={`/users/${session?.user.id}`}>
                     <img
-                        src={session.user.image || 'https://media.idownloadblog.com/wp-content/uploads/2017/03/Twitter-new-2017-avatar-001.png'}
+                        src={user?.image || session?.user?.image  || 'https://media.idownloadblog.com/wp-content/uploads/2017/03/Twitter-new-2017-avatar-001.png'}
                         alt="avatar"
                         className="w-full h-full object-cover"
                     />

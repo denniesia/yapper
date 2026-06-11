@@ -44,13 +44,16 @@ export const authOptions = {
 					if (!isPasswordValid) {
 						throw new Error("Invalid password");
 					}
-
+				
 					// IMPORTANT: return safe object only
 					return {
 						id: user._id.toString(),
 						email: user.email,
 						name: user.username,
+						image: user.image,
 					};
+
+					
 				} catch (err) {
 					return null;
 				}
@@ -69,7 +72,7 @@ export const authOptions = {
 					user = await User.create({
 						email: profile?.email,
 						username: profile?.login,
-						image: profile?.avatar_url,
+						image: profile?.avatar_url ,
 					});
 				}
 
@@ -84,7 +87,7 @@ export const authOptions = {
 				token.id = user.id;
 				token.email = user.email;
 				token.name = user.name;
-				token.image = user.image || "";
+				token.image = user.image;
 			}
 
 			// For GitHub login 

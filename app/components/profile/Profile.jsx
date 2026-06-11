@@ -81,7 +81,7 @@ export default function Profile({ user }) {
                 {/* Header */}
                 <div className="sticky top-0 z-10 bg-black/80 backdrop-blur border-b border-gray-800 px-4 py-3">
                     <h1 className="text-2xl font-bold ml-4">{user.name || user.username}</h1>
-                    <p className="text-sm text-gray-500 ml-4">{user.tweets.length} posts</p>
+                    <p className="text-sm text-gray-500 ml-4">{user.tweets?.length} posts</p>
                 </div>
 
                 {/* Banner */}

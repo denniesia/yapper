@@ -46,8 +46,6 @@ export default function SignUp() {
 
        
     }
-
-
       const handleProvider = (event, value) => {
             event.preventDefault();
             signIn(value, {callbackUrl: "/"})
