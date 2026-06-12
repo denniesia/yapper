@@ -2,10 +2,11 @@
 import { useSession } from "next-auth/react";
 import LogoutButton from "../LogoutButton"
 import Link from "next/link";
-
+import { useState } from "react";
+import TweetInputModal  from "../tweet/TweetInputModal"
 
 export default function Sidebar() {
-
+    const [showTweetInputModal, setShowTweetInput] = useState(false);
     const { data: session, status } = useSession();
 
     const username =
@@ -16,6 +17,7 @@ export default function Sidebar() {
 
 
     return (
+        <>
         <aside className="w-64 p-6 border-r border-gray-800 hidden md:flex flex-col justify-between">
             <div className="space-y-10">
                 <Link href='/'>
@@ -39,12 +41,22 @@ export default function Sidebar() {
                         </Link>
                     </div>
                     <LogoutButton />
-                    <button className="w-full bg-blue-500 py-2 rounded-full font-semibold hover:bg-blue-600">
+                    <button className="w-full bg-blue-500 py-2 rounded-full font-semibold hover:bg-blue-600" 
+                        onClick={() => setShowTweetInput(true)}
+                    >
                         Post
                     </button>
                 </nav>
             </div>
             <div className="text-sm text-gray-400">@{username}</div>
         </aside>
+            {
+                showTweetInputModal && 
+                <TweetInputModal
+                    onClose={() => setShowTweetInput(false)}
+    
+                />
+                }
+        </>
     );
 }
