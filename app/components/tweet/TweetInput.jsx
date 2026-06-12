@@ -3,7 +3,7 @@
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-
+import { createTweet } from "../../lib/createTweet"
 
 export default function TweetInput({ onTweetPosted }) {
     const [content, setContent] = useState("");
@@ -25,31 +25,16 @@ export default function TweetInput({ onTweetPosted }) {
     }, [session])
 
   
-
-
     async function saveTweet() {
         if (!content.trim()) return;
 
-        const response = await fetch("/api/tweets", {
-            method: "POST",
-            body: JSON.stringify({
-                content,
-                author: session.user.id,
-            }),
-            headers: {
-                "Content-Type": "application/json",
-            },
+        await createTweet(content, session.user.id);
 
-        });
+        setContent("")
 
-        if (response.ok) {
-            setContent("");
-
-            if (onTweetPosted) {
-                onTweetPosted();
-            }
+        if (onTweetPosted) {
+            onTweetPosted();
         }
-
     }
 
     return (
