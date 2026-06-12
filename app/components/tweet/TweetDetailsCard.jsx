@@ -15,6 +15,7 @@ export default function TweetDetailsCard({ tweet, liked }) {
     const [countLikes, setCountLikes] = useState(
         tweet.likes.length
     );
+    const [ user, setUser ] = useState(null)
 
     const { data: session, status } = useSession();
 
@@ -30,6 +31,7 @@ export default function TweetDetailsCard({ tweet, liked }) {
             )
         );
     }, [session, tweet.likes]);
+   
 
     async function handleLikeAction(e) {
         e.preventDefault();
@@ -47,6 +49,20 @@ export default function TweetDetailsCard({ tweet, liked }) {
         setIsLiked(data.liked);
         setCountLikes(data.likesCount);
     }
+
+    useEffect(() => {
+        if (!session?.user?.id) return;
+
+        async function fetchUser() {
+            const res = await fetch(`/api/users/${session.user.id}`)
+            const data = await res.json();
+            setUser(data);
+              console.log("USER", data)
+        }
+
+        fetchUser();
+    }, [session])
+
 
     async function saveReply() {
         if (!reply.trim()) return;
@@ -154,10 +170,10 @@ export default function TweetDetailsCard({ tweet, liked }) {
                 </div>
 
             </div>
-            {session?.user && <div className="border-b border-gray-800 p-4">
+            {user && <div className="border-b border-gray-800 p-4">
                 <div className="flex gap-3">
                     <img
-                        src={session.user.image || 'https://media.idownloadblog.com/wp-content/uploads/2017/03/Twitter-new-2017-avatar-001.png'}
+                        src={user.image || 'https://media.idownloadblog.com/wp-content/uploads/2017/03/Twitter-new-2017-avatar-001.png'}
                         alt="Profile"
                         className="w-10 h-10 rounded-full object-cover"
                     />

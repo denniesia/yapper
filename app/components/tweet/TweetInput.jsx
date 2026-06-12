@@ -52,7 +52,6 @@ export default function TweetInput({ onTweetPosted }) {
 
     }
 
-    console.log(session)
     return (
         <div className="p-4 border-b border-gray-800 flex space-x-4">
             <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-700 flex items-center justify-center">
