@@ -26,7 +26,7 @@ export default function TweetInputModal({
 
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70" onClick={onClose}>
             <div className="w-full max-w-xl rounded-2xl bg-black border-2 border-gray-800 shadow-xl">
 
                 {/* Header */}
