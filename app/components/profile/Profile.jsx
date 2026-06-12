@@ -63,8 +63,6 @@ export default function Profile({ user }) {
 
             const updatedUser = await res.json();
 
-            console.log("Updated user:", updatedUser);
-
             setShowEditProfileModal(false);
             router.refresh();
 
@@ -73,7 +71,7 @@ export default function Profile({ user }) {
         }
     };
 
-
+    console.log(userTweets)
     return (
 
         <div className="flex-1 border-r border-gray-800 max-w-3xl">
