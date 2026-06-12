@@ -48,11 +48,11 @@ export default function TweetCard({ tweet }) {
     return (
         <div className="p-4 border-b border-gray-800 flex space-x-4 hover:bg-gray-900">
             <div className="w-12 h-12 bg-gray-700 rounded-full flex-shrink-0">
-                <Link href={`/users/${tweet.author._id}`}>
+                <Link href={`/users/${tweet.author?._id}`}>
                     <img
                         className="w-12 h-12 rounded-full object-cover"
                         src={
-                            tweet.author.image ||
+                            tweet.author?.image ||
                             "https://media.idownloadblog.com/wp-content/uploads/2017/03/Twitter-new-2017-avatar-001.png"
                         }
                         alt=""
@@ -64,7 +64,7 @@ export default function TweetCard({ tweet }) {
                 <Link href={`/tweets/${tweet._id}?liked=${isLiked}`}>
                     <div>
                         <div className="text-gray-400 text-sm">
-                            @{tweet.author.username || tweet.author.name} · {createdTimeAgo}
+                            @{tweet.author?.username || tweet.author?.name} · {createdTimeAgo}
                         </div>
 
                         <p className="mt-2">{tweet.content}</p>

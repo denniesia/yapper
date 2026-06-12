@@ -14,8 +14,6 @@ export default function Sidebar() {
             ? "loading"
             : session?.user?.name || session?.user?.username || "Guest";
 
-
-
     return (
         <>
         <aside className="w-64 p-6 border-r border-gray-800 hidden md:flex flex-col justify-between">
@@ -54,6 +52,7 @@ export default function Sidebar() {
                 showTweetInputModal && 
                 <TweetInputModal
                     onClose={() => setShowTweetInput(false)}
+                    onTweetPosted
     
                 />
                 }
