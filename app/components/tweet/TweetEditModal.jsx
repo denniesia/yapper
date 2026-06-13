@@ -6,6 +6,7 @@ import useCurrentUser from "../../hooks/useCurrentUser";
 import { createTweet } from "../../lib/createTweet"
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
+import { formatDate } from "../../utils/formatDate"
 
 export default function TweetEditModal({
     tweet,
@@ -15,28 +16,26 @@ export default function TweetEditModal({
 
     const router = useRouter();
 
-    async function saveTweet() {
+    async function updateTweet() {
         if (!content.trim()) return;
 
-        await createTweet(content, user._id);
+        await fetch(`/api/tweets/${tweet._id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                content,
+            }),
+        });
 
-        setContent("");
         onClose();
         router.refresh();
     }
 
-    const fullDate = format(
-        new Date(tweet.createdAt),
-        "h:mm a · MMM d, yyyy"
-    );
-
-    const editedFullDate = format(
-        new Date(tweet.updatedAt),
-        "h:mm a · MMM d, yyyy"
-    );
-
-
-
+    const fullDate = formatDate(tweet.createdAt)
+  
+    const editedFullDate = formatDate(tweet.updatedAt)
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70" >
@@ -75,7 +74,7 @@ export default function TweetEditModal({
 
                         {/* Tweet metadata */}
                         {
-                            editedFullDate !== fullDate && 
+                            editedFullDate !== fullDate &&
                             (<div className="text-sm text-gray-500 text-end mb-1">Edited· {editedFullDate}</div>)
                         }
 
@@ -95,11 +94,11 @@ export default function TweetEditModal({
                         Cancel
                     </button>
                     <button
-                        onClick={saveTweet}
+                        onClick={updateTweet}
                         disabled={!content.trim()}
                         className="px-6 py-2 rounded-full bg-blue-500 font-semibold hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                        Post
+                        Update
                     </button>
                 </div>
             </div>
