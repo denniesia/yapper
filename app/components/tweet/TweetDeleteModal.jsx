@@ -1,11 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { X } from "lucide-react";
-import useCurrentUser from "../../hooks/useCurrentUser";
-import { createTweet } from "../../lib/createTweet"
 import { useRouter } from "next/navigation";
-import { format } from "date-fns";
 import { formatDate } from "../../utils/formatDate"
 import { toast } from "sonner";
 

@@ -1,3 +1,5 @@
+import { toast } from "sonner";
+
 export async function createTweet(content, authorId) {
     const response = await fetch("/api/tweets", {
         method: "POST",
@@ -13,6 +15,8 @@ export async function createTweet(content, authorId) {
     if (!response.ok) {
         throw new Error("Failed to create tweet");
     }
+
+    toast.success("Tweet created successfully");
 
     return response.json();
 }
