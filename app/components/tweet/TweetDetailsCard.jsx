@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import RepliesSection from "../reply/RepliesSection";
+import { formatDate } from "../../utils/formatDate"
 
 export default function TweetDetailsCard({ tweet, liked }) {
     const [isLiked, setIsLiked] = useState(liked);
@@ -92,11 +93,9 @@ export default function TweetDetailsCard({ tweet, liked }) {
         new Date(tweet.createdAt),
         { addSuffix: true }
     );
+    const editedDate = formatDate(tweet.updatedAt);
 
-    const fullDate = format(
-        new Date(tweet.createdAt),
-        "h:mm a · MMM d, yyyy"
-    );
+    const fullDate = formatDate(tweet.createdAt)
 
     return (
         <>
@@ -132,12 +131,15 @@ export default function TweetDetailsCard({ tweet, liked }) {
                 </div>
 
                 {/* Timestamp */}
-                <div className="mt-5 text-gray-500 text-sm -b border-gray-800 pb-4">
+                <div className="mt-5 text-gray-500 text-sm -b border-gray-800 pb-1">
                     {fullDate}
                     <span className="ml-2">·</span>
                     <span className="ml-2">{createdTimeAgo}</span>
-                </div>
+                   
 
+                </div>
+                {editedDate !== fullDate && <span className="text-gray-500 text-sm -b border-gray-800 pb-4"> Edited {editedDate}</span>}
+               
                 {/* Stats */}
                 <div className="flex gap-6 py-4 text-sm border-b border-gray-800">
                     <span>

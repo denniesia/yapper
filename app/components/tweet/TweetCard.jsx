@@ -48,7 +48,6 @@ export default function TweetCard({ tweet }) {
         setLikesCount(data.likesCount)
     }
 
-
     return (
         <div className="relative p-4 border-b border-gray-800 flex space-x-4 hover:bg-gray-900">
 
@@ -97,7 +96,7 @@ export default function TweetCard({ tweet }) {
                 <Link href={`/tweets/${tweet._id}?liked=${isLiked}`}>
                     <div>
                         <div className="text-gray-400 text-sm">
-                            @{tweet.author?.username || tweet.author?.name} · {createdTimeAgo}
+                            @{tweet.author?.username || tweet.author?.name} · {createdTimeAgo} 
                         </div>
 
                         <p className="mt-2 break-words">
