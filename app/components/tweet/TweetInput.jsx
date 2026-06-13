@@ -61,8 +61,9 @@ export default function TweetInput({ onTweetPosted }) {
 
                 <div className="flex justify-end mt-2">
                     <button
-                        className="bg-blue-500 px-8 py-1 rounded-full hover:bg-blue-600"
+                        className="bg-blue-500 px-8 py-1 rounded-full hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
                         onClick={saveTweet}
+                       disabled={!content.trim()}
                     >
                         Post
                     </button>
