@@ -1,5 +1,7 @@
+import { NextResponse } from "next/server";
 import { makeSureDbIsReady } from "../../../lib/db";
 import Tweet from "../../../lib/schemas/TweetSchema";
+
 
 export async function GET(request, { params }) {
 	try {
@@ -53,6 +55,35 @@ export async function PATCH(req, { params }) {
 		}
 
 		return NextResponse.json(updatedTweet);
+	} catch(error) {
+		return NextResponse.json(
+			{ message : error.message },
+			{ status: 500 }
+		)
+	}
+}
+
+
+export async function DELETE(req, { params }) {
+	try {
+		await makeSureDbIsReady();	
+
+		const { id } = await params;
+		console.log("Deleting tweet with ID:", id);
+
+		const deletedTweet = await Tweet.findByIdAndDelete(id);	
+
+		if (!deletedTweet) {
+			return NextResponse.json(
+				{ message: "Tweet not found" },
+				{ status: 404 }
+			)
+		}
+
+		return NextResponse.json(
+			{ message: "Tweet deleted successfully" },
+			{ status: 200 }
+		)
 	} catch(error) {
 		return NextResponse.json(
 			{ message : error.message },
