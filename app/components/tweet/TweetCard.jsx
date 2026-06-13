@@ -5,9 +5,11 @@ import Link from "next/link";
 import { Heart, MessageCircle, Pencil, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import TweetEditModal from "./TweetEditModal";
-
+import TweetDeleteModal from "./TweetDeleteModal";
 
 import useCurrentUser from "@/app/hooks/useCurrentUser";
+
+
 
 export default function TweetCard({ tweet }) {
     const { user } = useCurrentUser();
@@ -15,6 +17,7 @@ export default function TweetCard({ tweet }) {
     const [likesCount, setLikesCount] = useState(tweet.likes.length);
 
     const [showTweetEditModal, setShowTweetEditModal] = useState(false);
+    const [showTweetDeleteModal, setShowTweetDeleteModal] = useState(false);
 
     useEffect(() => {
         if (!user?.id) return;
@@ -48,6 +51,7 @@ export default function TweetCard({ tweet }) {
         setLikesCount(data.likesCount)
     }
 
+   
     return (
         <div className="relative p-4 border-b border-gray-800 flex space-x-4 hover:bg-gray-900">
 
@@ -64,7 +68,7 @@ export default function TweetCard({ tweet }) {
                     <button
                         className="p-2 rounded-full text-gray-500 hover:bg-gray-800 hover:text-red-500 transition"
                     >
-                        <Trash2 size={16} />
+                        <Trash2 size={16} onClick={() => setShowTweetDeleteModal(true)}/>
                     </button>
 
                 </div>
@@ -74,6 +78,13 @@ export default function TweetCard({ tweet }) {
                 <TweetEditModal 
                     tweet={tweet} 
                     onClose={() => setShowTweetEditModal(false)} 
+                />
+            }
+
+            {showTweetDeleteModal && 
+                <TweetDeleteModal 
+                    tweet={tweet} 
+                    onClose={() => setShowTweetDeleteModal(false)} 
                 />
             }
 
