@@ -27,3 +27,36 @@ export async function GET(request, { params }) {
 		return Response.json({ error: error.message }, { status: 500 });
 	}
 }
+
+
+
+export async function PATCH(req, { params }) {
+	try {
+		await makeSureDbIsReady();
+
+		const { id } = await params;
+		const { content } = await req.json();
+		
+		const updatedTweet = await Tweet.findByIdAndUpdate(
+			id, 
+			{
+				content
+			},
+			{ new: true }
+		)
+
+		if (!updatedTweet) {
+			return NextResponse.json(
+				{ message: "Tweet not found" },
+				{ status: 404 }
+			)
+		}
+
+		return NextResponse.json(updatedTweet);
+	} catch(error) {
+		return NextResponse.json(
+			{ message : error.message },
+			{ status: 500 }
+		)
+	}
+}
