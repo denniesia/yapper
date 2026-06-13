@@ -4,6 +4,8 @@ import { formatDistanceToNow } from "date-fns";
 import Link from "next/link";
 import { Heart, MessageCircle, Pencil, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
+import TweetEditModal from "./TweetEditModal";
+
 
 import useCurrentUser from "@/app/hooks/useCurrentUser";
 
@@ -11,6 +13,8 @@ export default function TweetCard({ tweet }) {
     const { user } = useCurrentUser();
     const [isLiked, setIsLiked] = useState(false);
     const [likesCount, setLikesCount] = useState(tweet.likes.length);
+
+    const [showTweetEditModal, setShowTweetEditModal] = useState(false);
 
     useEffect(() => {
         if (!user?.id) return;
@@ -44,6 +48,7 @@ export default function TweetCard({ tweet }) {
         setLikesCount(data.likesCount)
     }
 
+
     return (
         <div className="relative p-4 border-b border-gray-800 flex space-x-4 hover:bg-gray-900">
 
@@ -54,7 +59,7 @@ export default function TweetCard({ tweet }) {
                     <button
                         className="p-2 rounded-full text-gray-500 hover:bg-gray-800 hover:text-sky-500 transition"
                     >
-                        <Pencil size={16} />
+                        <Pencil size={16} onClick={() => setShowTweetEditModal(true)}/>
                     </button>
 
                     <button
@@ -65,6 +70,13 @@ export default function TweetCard({ tweet }) {
 
                 </div>
             )}
+
+            {showTweetEditModal && 
+                <TweetEditModal 
+                    tweet={tweet} 
+                    onClose={() => setShowTweetEditModal(false)} 
+                />
+            }
 
             {/* Avatar */}
             <div className="w-12 h-12 bg-gray-700 rounded-full flex-shrink-0">
