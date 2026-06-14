@@ -43,7 +43,18 @@ export async function GET(request, { params }) {
 			return Response.json({ error: "Tweet not found" }, { status: 404 });
 		}
 
-		return Response.json({ liked, likesCount: tweet.likes.length }, { status: 200 });
+		const liked = session
+            ? tweet.likes.some(
+                  likeId =>
+                      likeId.toString() === session.user.id
+              )
+            : false;
+
+        return Response.json({
+            tweet,
+            liked,
+            likesCount: tweet.likes.length,
+        });
 	} catch (error) {
 		console.error("API Error:", error);
 		return Response.json({ error: error.message }, { status: 500 });

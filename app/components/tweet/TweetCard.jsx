@@ -15,15 +15,13 @@ export default function TweetCard({ tweet }) {
     const [isLiked, setIsLiked] = useState(false);
     const [likesCount, setLikesCount] = useState(tweet.likes.length);
 
-    const [showTweetEditModal, setShowTweetEditModal] = useState(false);
-    const [showTweetDeleteModal, setShowTweetDeleteModal] = useState(false);
 
     useEffect(() => {
-        if (!user?.id) return;
+        if (!user?._id) return;
 
         setIsLiked(
             tweet.likes.some(
-                (id) => id.toString() === user.id
+                (id) => id.toString() === user?._id
             )
         );
     }, [user, tweet.likes]);
@@ -47,9 +45,10 @@ export default function TweetCard({ tweet }) {
         const data = await res.json();
 
         setIsLiked(data.liked);
-        setLikesCount(data.likesCount)
+        setLikesCount(data.likesCount);
+        console.log(data.liked)
     }
-
+   
    
     return (
         <div className="relative p-4 border-b border-gray-800 flex space-x-4 hover:bg-gray-900">
