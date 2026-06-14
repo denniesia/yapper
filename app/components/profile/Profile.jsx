@@ -123,7 +123,7 @@ export default function Profile({ user: profileUser }) {
                             <ProfileEditModal
                                 onClose={() => setShowEditProfileModal(false)}
                                 onSave={handleSaveProfile}
-                                initialData={user}
+                                initialData={profileUser}
                             />
                         )
                     }
