@@ -3,20 +3,24 @@
 import { formatDistanceToNow, format } from "date-fns";
 import {
     MessageCircle,
-    Heart
+    Heart,
+    Trash2,
+    Pencil
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import RepliesSection from "../reply/RepliesSection";
 import { formatDate } from "../../utils/formatDate"
+import EditTweetButton from "./EditTweetButton";
+import DeleteTweetButton from "./DeleteTweetButton";
 
 export default function TweetDetailsCard({ tweet, liked }) {
     const [isLiked, setIsLiked] = useState(liked);
     const [countLikes, setCountLikes] = useState(
         tweet.likes.length
     );
-    const [ user, setUser ] = useState(null)
+    const [user, setUser] = useState(null)
 
     const { data: session, status } = useSession();
 
@@ -32,7 +36,7 @@ export default function TweetDetailsCard({ tweet, liked }) {
             )
         );
     }, [session, tweet.likes]);
-   
+
 
     async function handleLikeAction(e) {
         e.preventDefault();
@@ -58,7 +62,6 @@ export default function TweetDetailsCard({ tweet, liked }) {
             const res = await fetch(`/api/users/${session.user.id}`)
             const data = await res.json();
             setUser(data);
-              console.log("USER", data)
         }
 
         fetchUser();
@@ -97,6 +100,8 @@ export default function TweetDetailsCard({ tweet, liked }) {
 
     const fullDate = formatDate(tweet.createdAt)
 
+    const isAuthor = user?._id === tweet.author._id;
+
     return (
         <>
             <div className="max-w-3xl mx-auto border-b border-gray-800 p-6">
@@ -122,6 +127,15 @@ export default function TweetDetailsCard({ tweet, liked }) {
                             </span>
                         </div>
                     </div>
+                    {isAuthor && (
+                        <div className=" flex items-center gap-2">
+                            <EditTweetButton tweet={tweet} />
+
+                           <DeleteTweetButton tweet={tweet} />
+
+                        </div>
+                    )}
+
                 </div>
 
                 <div className="mt-4">
@@ -135,11 +149,11 @@ export default function TweetDetailsCard({ tweet, liked }) {
                     {fullDate}
                     <span className="ml-2">·</span>
                     <span className="ml-2">{createdTimeAgo}</span>
-                   
+
 
                 </div>
                 {editedDate !== fullDate && <span className="text-gray-500 text-sm -b border-gray-800 pb-4"> Edited {editedDate}</span>}
-               
+
                 {/* Stats */}
                 <div className="flex gap-6 py-4 text-sm border-b border-gray-800">
                     <span>
