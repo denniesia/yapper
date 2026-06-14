@@ -2,13 +2,12 @@
 
 import { formatDistanceToNow } from "date-fns";
 import Link from "next/link";
-import { Heart, MessageCircle, Pencil, Trash2 } from "lucide-react";
+import { Heart, MessageCircle } from "lucide-react";
 import { useEffect, useState } from "react";
-import TweetEditModal from "./TweetEditModal";
-import TweetDeleteModal from "./TweetDeleteModal";
+import EditTweetButton from "./EditTweetButton";
+import DeleteTweetButton from "./DeleteTweetButton";
 
 import useCurrentUser from "@/app/hooks/useCurrentUser";
-
 
 
 export default function TweetCard({ tweet }) {
@@ -58,35 +57,12 @@ export default function TweetCard({ tweet }) {
             {/* Edit button top-right */}
             {user?._id === tweet.author?._id && (
                 <div className="absolute top-4 right-4 flex items-center gap-2">
-
-                    <button
-                        className="p-2 rounded-full text-gray-500 hover:bg-gray-800 hover:text-sky-500 transition"
-                    >
-                        <Pencil size={16} onClick={() => setShowTweetEditModal(true)}/>
-                    </button>
-
-                    <button
-                        className="p-2 rounded-full text-gray-500 hover:bg-gray-800 hover:text-red-500 transition"
-                    >
-                        <Trash2 size={16} onClick={() => setShowTweetDeleteModal(true)}/>
-                    </button>
-
+                   <EditTweetButton tweet={tweet} />
+                   <DeleteTweetButton tweet={tweet} />
                 </div>
             )}
 
-            {showTweetEditModal && 
-                <TweetEditModal 
-                    tweet={tweet} 
-                    onClose={() => setShowTweetEditModal(false)} 
-                />
-            }
-
-            {showTweetDeleteModal && 
-                <TweetDeleteModal 
-                    tweet={tweet} 
-                    onClose={() => setShowTweetDeleteModal(false)} 
-                />
-            }
+          
 
             {/* Avatar */}
             <div className="w-12 h-12 bg-gray-700 rounded-full flex-shrink-0">
