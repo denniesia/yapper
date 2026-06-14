@@ -14,6 +14,8 @@ import RepliesSection from "../reply/RepliesSection";
 import { formatDate } from "../../utils/formatDate"
 import EditTweetButton from "./EditTweetButton";
 import DeleteTweetButton from "./DeleteTweetButton";
+import Link from "next/link";
+
 
 export default function TweetDetailsCard({ tweet, liked }) {
     const [isLiked, setIsLiked] = useState(liked);
@@ -107,6 +109,7 @@ export default function TweetDetailsCard({ tweet, liked }) {
             <div className="max-w-3xl mx-auto border-b border-gray-800 p-6">
                 {/* Header */}
                 <div className="flex items-start gap-3">
+                    <Link href={`/users/${tweet.author?._id}`}>
                     <img
                         src={
                             tweet.author.image ||
@@ -115,6 +118,7 @@ export default function TweetDetailsCard({ tweet, liked }) {
                         alt={tweet.author.username}
                         className="w-14 h-14 rounded-full object-cover"
                     />
+                    </Link>
 
                     <div className="flex-1">
                         <div className="flex flex-col">
