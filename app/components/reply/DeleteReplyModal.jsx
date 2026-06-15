@@ -1,9 +1,11 @@
+import { useRouter } from "next/navigation";
+
 export default function DeleteReplyDModal({
     reply,
     isOpen,
     onClose,
 }) {
-
+    const router = useRouter();
 
     async function handleDeleteReply() {
         try {

@@ -46,7 +46,6 @@ export default function TweetCard({ tweet }) {
 
         setIsLiked(data.liked);
         setLikesCount(data.likesCount);
-        console.log(data.liked)
     }
    
    

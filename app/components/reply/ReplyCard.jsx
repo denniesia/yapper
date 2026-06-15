@@ -5,7 +5,7 @@ import { Trash2, Pencil, PencilIcon } from 'lucide-react';
 import DeleteReplyModal from "./DeleteReplyModal";
 import { useRouter } from "next/navigation";
 import EditReplyModal from "./EditReplyModal";
-
+import Link from "next/link";
 
 
 export default function ReplyCard({ reply }) {
@@ -19,7 +19,9 @@ export default function ReplyCard({ reply }) {
 
     return (
         <div key={reply._id} className="flex gap-3 p-4 border-b border-gray-800">
-            <img src={reply.author?.image} className="w-10 h-10 rounded-full object-cover" />
+            <Link href={`/users/${reply.author._id}`}> 
+                <img src={reply.author?.image} className="w-10 h-10 rounded-full object-cover" />
+            </Link>
             <div className="flex-1">
                 <div className="flex justify-between">
                     <div className="flex gap-2 items-center">
