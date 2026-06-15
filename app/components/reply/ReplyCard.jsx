@@ -1,17 +1,21 @@
 import { useSession } from "next-auth/react";
 import { formatDistanceToNow } from "date-fns";
 import { useState } from "react";
-import { Trash2, Pencil } from 'lucide-react';
-import ReplyDeleteModal from "./ReplyDeleteModal";
+import { Trash2, Pencil, PencilIcon } from 'lucide-react';
+import DeleteReplyModal from "./DeleteReplyModal";
 import { useRouter } from "next/navigation";
+import EditReplyModal from "./EditReplyModal";
+
+
 
 export default function ReplyCard({ reply }) {
     const { data: session, status } = useSession();
     const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [showEditModal, setShowEditModal] = useState(false);
 
     const router = useRouter();
     const isAuthor = session?.user?.id === reply.author._id
-    
+
 
 
     async function handleDeleteReply() {
@@ -21,7 +25,7 @@ export default function ReplyCard({ reply }) {
             });
 
             if (!res.ok) {
-                throw new Error( "Failed to delete reply");
+                throw new Error("Failed to delete reply");
             }
 
             setShowDeleteModal(false)
@@ -31,6 +35,8 @@ export default function ReplyCard({ reply }) {
             console.error(error);
         }
     }
+   
+
 
     return (
         <div key={reply._id} className="flex gap-3 p-4 border-b border-gray-800">
@@ -49,8 +55,9 @@ export default function ReplyCard({ reply }) {
                         isAuthor &&
                         (
                             <div className="flex text-gray-500 mr-4 gap-4">
-                                <button className="hover:text-yellow-400 cursor-pointer transition align-end">
-                                    <Pencil size={18} />
+                                {/* <EditButton tweet={reply} /> */}
+                                <button className="hover:text-red-400 transition align-end cursor-pointer" onClick={() => setShowEditModal(true)}>
+                                    <PencilIcon size={18} />
                                 </button>
                                 <button className="hover:text-red-400 transition align-end cursor-pointer" onClick={() => setShowDeleteModal(true)}>
                                     <Trash2 size={18} />
@@ -61,10 +68,17 @@ export default function ReplyCard({ reply }) {
                     }
 
                     {showDeleteModal && (
-                        <ReplyDeleteModal
+                        <DeleteReplyModal
                             isOpen={showDeleteModal}
                             onClose={() => setShowDeleteModal(false)}
                             onConfirm={handleDeleteReply}
+                        />
+                    )}
+                    {showEditModal && (
+                        <EditReplyModal
+                            isOpen={showEditModal}
+                            onClose={() => setShowEditModal(false)}
+                            reply={reply}
                         />
                     )}
 
