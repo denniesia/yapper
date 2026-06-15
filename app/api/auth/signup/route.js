@@ -38,7 +38,6 @@ export async function POST(req) {
             email,
             password: hashedPassword,
             confirmPassword: hashedPassword,
-            image
         }); 
 
         await newUser.save();

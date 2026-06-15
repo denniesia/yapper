@@ -115,7 +115,7 @@ export default function Profile({ user: profileUser }) {
                                 Edit profile
                             </button>
                         </div>
-                        )
+                    )
                     }
 
                     {
@@ -169,9 +169,12 @@ export default function Profile({ user: profileUser }) {
 
                 {/* Posts */}
                 <div>
-                    {userTweets.map(tweet => (
-                        <TweetCard key={tweet._id} tweet={tweet} />
-                    ))}
+                    {userTweets.length > 0 
+                        ? userTweets.map(tweet => (
+                            <TweetCard key={tweet._id} tweet={tweet} />
+                        ))
+                        : <p className="text-center italic mt-10 text-gray-500">No posts yet</p>
+                    }
 
                 </div>
             </div>
