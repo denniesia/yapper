@@ -1,8 +1,29 @@
 export default function DeleteReplyDModal({
+    reply,
     isOpen,
     onClose,
-    onConfirm
 }) {
+
+
+    async function handleDeleteReply() {
+        try {
+            const res = await fetch(`/api/replies/${reply._id}`, {
+                method: "DELETE",
+            });
+
+            if (!res.ok) {
+                throw new Error("Failed to delete reply");
+            }
+
+            onClose();
+            router.refresh();
+
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+
     return (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
             <div className="bg-black border-gray-600 border-2 rounded-xl p-6 w-full max-w-sm shadow-lg">
@@ -23,9 +44,9 @@ export default function DeleteReplyDModal({
                     </button>
 
                     <button
-                        onClick={onConfirm}
+                        onClick={handleDeleteReply}
                         className="px-4 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600 cursor-pointer"
-                        
+
                     >
                         Delete
                     </button>
