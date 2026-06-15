@@ -4,7 +4,7 @@ import { TriangleAlert } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
-
+import { signIn } from "next-auth/react";
 
 export default function SignUp() {
     const [form, setForm] = useState({
