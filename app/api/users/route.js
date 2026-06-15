@@ -6,7 +6,7 @@ export async function GET(req, { params }) {
     try {
         await makeSureDbIsReady();
         
-        const users = await User.find().sort({createdAt: -1})
+        const users = await User.find().sort({createdAt: 1})
 
         return NextResponse.json(users, { status : 200});
     } catch (error) {
@@ -16,9 +16,3 @@ export async function GET(req, { params }) {
         )
     }
 }
-
-// export async function POST(req) {
-//     try {
-
-//     }
-// }

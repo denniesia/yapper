@@ -1,6 +1,8 @@
 "use client"
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
+
 
 export default function RightSidebar() {
     const [usersToFollow, setUsersToFollow] = useState([]);
@@ -38,14 +40,16 @@ export default function RightSidebar() {
                 {usersToFollow.map((user) => (
                     <div key={user._id} className="flex justify-between items-center py-2">
                         <div className="flex gap-1 items-center">
-                            <img
-                            className="w-8 h-8 rounded-full object-cover"
-                            src={
-                                user.image ||
-                                "https://media.idownloadblog.com/wp-content/uploads/2017/03/Twitter-new-2017-avatar-001.png"
-                            }
-                            alt=""
-                        />
+                            <Link href={`/users/${user._id}`}> 
+                                <img
+                                    className="w-10 h-10 rounded-full object-cover"
+                                    src={
+                                        user.image ||
+                                        "https://media.idownloadblog.com/wp-content/uploads/2017/03/Twitter-new-2017-avatar-001.png"
+                                    }
+                                    alt=""
+                                />
+                            </Link>
                             <div className="text-gray-400 text-sm">@{user.username}</div>
                         </div>
                         <button className="bg-white text-black px-3 py-1 rounded-full text-sm hover:bg-blue-300 cursor-pointer">
