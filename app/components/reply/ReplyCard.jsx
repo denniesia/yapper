@@ -17,27 +17,6 @@ export default function ReplyCard({ reply }) {
     const isAuthor = session?.user?.id === reply.author._id
 
 
-
-    async function handleDeleteReply() {
-        try {
-            const res = await fetch(`/api/replies/${reply._id}`, {
-                method: "DELETE",
-            });
-
-            if (!res.ok) {
-                throw new Error("Failed to delete reply");
-            }
-
-            setShowDeleteModal(false)
-            router.refresh();
-
-        } catch (error) {
-            console.error(error);
-        }
-    }
-   
-
-
     return (
         <div key={reply._id} className="flex gap-3 p-4 border-b border-gray-800">
             <img src={reply.author?.image} className="w-10 h-10 rounded-full object-cover" />
@@ -71,7 +50,7 @@ export default function ReplyCard({ reply }) {
                         <DeleteReplyModal
                             isOpen={showDeleteModal}
                             onClose={() => setShowDeleteModal(false)}
-                            onConfirm={handleDeleteReply}
+                            reply={reply}
                         />
                     )}
                     {showEditModal && (
