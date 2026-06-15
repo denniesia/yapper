@@ -12,8 +12,8 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import RepliesSection from "../reply/RepliesSection";
 import { formatDate } from "../../utils/formatDate"
-import EditTweetButton from "./EditTweetButton";
-import DeleteTweetButton from "./DeleteTweetButton";
+import EditTweetButton from "./EditTweetButton"
+import DeleteTweetButton from "./DeleteTweetButton"
 import Link from "next/link";
 
 
@@ -135,7 +135,7 @@ export default function TweetDetailsCard({ tweet, liked }) {
                         <div className=" flex items-center gap-2">
                             <EditTweetButton tweet={tweet} />
 
-                           <DeleteTweetButton tweet={tweet} />
+                            <DeleteTweetButton tweet={tweet} />
 
                         </div>
                     )}
