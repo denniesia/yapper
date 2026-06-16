@@ -3,65 +3,40 @@ import { makeSureDbIsReady } from "../../lib/db";
 import Tweet from "../../lib/schemas/TweetSchema";
 import { getServerSession } from "next-auth";
 import User from "../../lib/schemas/UserSchema";
+import mongoose from "mongoose";
+import { authOptions } from "../auth/[...nextauth]/route";
+
 
 export async function POST(req) {
-	try {
-		const session = await getServerSession();
-		await makeSureDbIsReady();
+  try {
+    const session = await getServerSession(authOptions);
+    await makeSureDbIsReady();
 
-		const body = await req.json();
+    if (!session?.user?.id) {
+      return Response.json({ error: "Unauthorized" }, { status: 401 });
+    }
 
-		const { content, author } = body;
+    const { content } = await req.json();
 
-		if (!content?.trim()) {
-			return Response.json(
-				{
-					error: "Content is required",
-				},
-				{
-					status: 400,
-				},
-			);
-		}
+    if (!content?.trim()) {
+      return Response.json({ error: "Content is required" }, { status: 400 });
+    }
 
-		let authorId;
-		try {
-			authorId = new ObjectId(author);
-		} catch (err) {
-			return new Response(
-				JSON.stringify({
-					error: "Invalid author ID format",
-				}),
-				{
-					status: 400,
-					headers: { "Content-Type": "application/json" },
-				},
-			);
-		}
+    const newTweet = await Tweet.create({
+      author: session.user.id,
+      content: content.trim(),
+    });
 
-		const newTweet = await Tweet.create({
-			author: authorId,
-			content: content.trim(),
-		});
-		await User.findByIdAndUpdate(authorId, {
-			$push: { tweets: newTweet._id },
-		});
+    await newTweet.populate("author", "name username image");
 
-		return Response.json(newTweet, {
-			status: 201,
-		});
-	} catch (error) {
-		console.log("POST ERROR:", error);
+    await User.findByIdAndUpdate(session.user.id, {
+      $push: { tweets: newTweet._id },
+    });
 
-		return Response.json(
-			{
-				error: error.message,
-			},
-			{
-				status: 500,
-			},
-		);
-	}
+    return Response.json(newTweet, { status: 201 });
+  } catch (error) {
+    return Response.json({ error: error.message }, { status: 500 });
+  }
 }
 
 export async function GET() {

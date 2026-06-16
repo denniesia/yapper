@@ -36,7 +36,7 @@ export default function TweetCard({ tweet }) {
         e.stopPropagation();
 
         const res = await fetch(
-            `/api/tweets/${tweet._id}/like`,
+            `http://localhost:3001/api/tweets/${tweet._id}/like`,
             {
                 method: "POST",
             }
@@ -47,6 +47,7 @@ export default function TweetCard({ tweet }) {
         setIsLiked(data.liked);
         setLikesCount(data.likesCount);
     }
+
    
    
     return (

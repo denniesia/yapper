@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { makeSureDbIsReady } from "../../../lib/db";
 import Tweet from "../../../lib/schemas/TweetSchema";
 
-
 export async function GET(request, { params }) {
 	try {
 		await makeSureDbIsReady();
@@ -10,7 +9,10 @@ export async function GET(request, { params }) {
 		const { id } = await params;
 
 		const tweet = await Tweet.findById(id)
-			.populate("author")
+			.populate({
+				path: "author",
+				select: "name username image",
+			})
 			.populate({
 				path: "replies",
 				populate: {
@@ -30,64 +32,49 @@ export async function GET(request, { params }) {
 	}
 }
 
-
-
 export async function PATCH(req, { params }) {
 	try {
 		await makeSureDbIsReady();
 
 		const { id } = await params;
 		const { content } = await req.json();
-		
+
 		const updatedTweet = await Tweet.findByIdAndUpdate(
-			id, 
+			id,
 			{
-				content
+				content,
 			},
-			{ new: true }
-		)
+			{ new: true },
+		);
 
 		if (!updatedTweet) {
-			return NextResponse.json(
-				{ message: "Tweet not found" },
-				{ status: 404 }
-			)
+			return NextResponse.json({ message: "Tweet not found" }, { status: 404 });
 		}
 
 		return NextResponse.json(updatedTweet);
-	} catch(error) {
-		return NextResponse.json(
-			{ message : error.message },
-			{ status: 500 }
-		)
+	} catch (error) {
+		return NextResponse.json({ message: error.message }, { status: 500 });
 	}
 }
 
-
 export async function DELETE(req, { params }) {
 	try {
-		await makeSureDbIsReady();	
+		await makeSureDbIsReady();
 
 		const { id } = await params;
 		console.log("Deleting tweet with ID:", id);
 
-		const deletedTweet = await Tweet.findByIdAndDelete(id);	
+		const deletedTweet = await Tweet.findByIdAndDelete(id);
 
 		if (!deletedTweet) {
-			return NextResponse.json(
-				{ message: "Tweet not found" },
-				{ status: 404 }
-			)
+			return NextResponse.json({ message: "Tweet not found" }, { status: 404 });
 		}
 
 		return NextResponse.json(
 			{ message: "Tweet deleted successfully" },
-			{ status: 200 }
-		)
-	} catch(error) {
-		return NextResponse.json(
-			{ message : error.message },
-			{ status: 500 }
-		)
+			{ status: 200 },
+		);
+	} catch (error) {
+		return NextResponse.json({ message: error.message }, { status: 500 });
 	}
 }

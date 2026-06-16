@@ -49,7 +49,7 @@ export default function Profile({ user: profileUser }) {
 
     const handleSaveProfile = async (data) => {
         try {
-            const res = await fetch(`http://localhost:3001/api/users/${profileUser._id}`, {
+            const res = await fetch(`/api/users/${profileUser._id}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
@@ -74,6 +74,7 @@ export default function Profile({ user: profileUser }) {
             console.error(err);
         }
     };
+
 
     return (
 

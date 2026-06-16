@@ -11,7 +11,7 @@ export default function RightSidebar() {
         const fetchUsers = async () => {
             try {
                 const res = await fetch(
-                    "http://localhost:3001/api/users"
+                    "/api/users"
                 );
 
                 const users = await res.json();

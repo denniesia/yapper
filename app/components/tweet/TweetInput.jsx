@@ -7,7 +7,7 @@ import { createTweet } from "../../lib/createTweet"
 
 export default function TweetInput({ onTweetPosted }) {
     const [content, setContent] = useState("");
-    const [ user, setUser ] = useState(null)
+    const [user, setUser] = useState(null)
     const { data: session, status } = useSession();
 
 
@@ -18,17 +18,26 @@ export default function TweetInput({ onTweetPosted }) {
             const res = await fetch(`/api/users/${session.user.id}`)
             const data = await res.json();
             setUser(data);
-              console.log("USER", data)
+
         }
 
         fetchUser();
     }, [session])
 
-  
+
     async function saveTweet() {
         if (!content.trim()) return;
 
-        await createTweet(content, session.user.id);
+        
+        try {
+            await createTweet(content);
+            setContent("");
+
+            onTweetPosted?.();
+        } catch (err) {
+            console.error(err);
+        }
+    
 
         setContent("")
 
@@ -42,7 +51,7 @@ export default function TweetInput({ onTweetPosted }) {
             <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-700 flex items-center justify-center">
                 <Link href={`/users/${session?.user.id}`}>
                     <img
-                        src={user?.image || session?.user?.image  || 'https://media.idownloadblog.com/wp-content/uploads/2017/03/Twitter-new-2017-avatar-001.png'}
+                        src={user?.image || session?.user?.image || 'https://media.idownloadblog.com/wp-content/uploads/2017/03/Twitter-new-2017-avatar-001.png'}
                         alt="avatar"
                         className="w-full h-full object-cover"
                     />
@@ -63,7 +72,7 @@ export default function TweetInput({ onTweetPosted }) {
                     <button
                         className="bg-blue-500 px-8 py-1 rounded-full hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
                         onClick={saveTweet}
-                       disabled={!content.trim()}
+                        disabled={!content.trim()}
                     >
                         Post
                     </button>

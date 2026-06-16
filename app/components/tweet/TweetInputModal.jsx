@@ -17,7 +17,7 @@ export default function TweetInputModal({
     async function saveTweet() {
         if (!content.trim()) return;
     
-        await createTweet(content, user._id);
+        await createTweet(content);
     
         setContent("");
         onClose();     

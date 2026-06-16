@@ -1,11 +1,13 @@
+import { makeSureDbIsReady } from "../lib/db";
+import Tweet from "../lib/schemas/TweetSchema";
+
 export async function getTweets() {
-	const response = await fetch("http://localhost:3001/api/tweets", {
-		cache: "no-store",
-	});
+  await makeSureDbIsReady();
 
-	if (!response.ok) {
-		throw new Error("Failed to fetch tweets");
-	}
+  const tweets = await Tweet.find({})
+    .sort({ createdAt: -1 })
+    .populate("author", "name username image")
+    .lean();
 
-	return response.json();
+  return JSON.parse(JSON.stringify(tweets));
 }

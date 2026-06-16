@@ -1,14 +1,13 @@
 import { toast } from "sonner";
 
-export async function createTweet(content, authorId) {
-    const response = await fetch("/api/tweets", {
+export async function createTweet(content) {
+    const response = await fetch("http://localhost:3001/api/tweets", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
             content,
-            author: authorId,
         }),
     });
 
