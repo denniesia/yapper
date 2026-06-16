@@ -7,8 +7,6 @@ import { useRouter } from "next/navigation";
 import useCurrentUser from "../../hooks/useCurrentUser";
 
 
-
-
 export default function Profile({ user: profileUser }) {
     const { user: currentUser } = useCurrentUser();
     const [showEditProfileModal, setShowEditProfileModal] = useState(false);
