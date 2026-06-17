@@ -8,9 +8,8 @@ import { authOptions } from "../../api/auth/[...nextauth]/route";
 export default async function ProfilePage({ params }) {
 	const { id } = await params;
 
-	const res = await fetch(`/api/users/${id}`);
+	const user = await getUser(id);
 
-	const user = await res.json();
 
 	return (
 		<div className="flex min-h-screen bg-black text-white">
