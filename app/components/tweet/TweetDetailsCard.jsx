@@ -45,7 +45,7 @@ export default function TweetDetailsCard({ tweet, liked }) {
         e.stopPropagation();
 
         const res = await fetch(
-            `http://localhost:3001//api/tweets/${tweet._id}/like`,
+           `${process.env.BASE_URL}/api/tweets/${tweet._id}/like`,
             {
                 method: "POST",
             }
@@ -74,7 +74,7 @@ export default function TweetDetailsCard({ tweet, liked }) {
         if (!reply.trim()) return;
 
         try {
-            await fetch(`http://localhost:3001/api/tweets/${tweet._id}/replies`, {
+            await fetch(`${process.env.BASE_URL}/api/tweets/${tweet._id}/replies`, {
                 method: "POST",
                 body: JSON.stringify({
                     content: reply,

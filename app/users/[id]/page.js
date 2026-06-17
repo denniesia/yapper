@@ -8,7 +8,7 @@ import { authOptions } from "../../api/auth/[...nextauth]/route";
 export default async function ProfilePage({ params }) {
 	const { id } = await params;
 
-	const res = await fetch(`http://localhost:3001/api/users/${id}`);
+	const res = await fetch(`${process.env.BASE_URL}/api/users/${id}`);
 
 	const user = await res.json();
 

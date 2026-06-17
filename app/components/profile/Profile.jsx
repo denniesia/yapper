@@ -27,7 +27,7 @@ export default function Profile({ user: profileUser }) {
         async function fetchTweets() {
             try {
                 const res = await fetch(
-                    `http://localhost:3001/api/tweets/user/${profileUser._id}`
+                    `${process.env.BASE_URL}/api/tweets/user/${profileUser._id}`
                 );
 
                 if (!res.ok) {

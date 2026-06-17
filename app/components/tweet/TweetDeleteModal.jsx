@@ -17,7 +17,7 @@ export default function TweetDeleteModal({
 
     async function deleteTweet() {
         try {
-            const res = await fetch(`http://localhost:3001/api/tweets/${tweet._id}`, {
+            const res = await fetch(`${process.env.BASE_URL}/api/tweets/${tweet._id}`, {
                 method: "DELETE",
             });
 
