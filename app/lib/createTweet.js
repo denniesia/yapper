@@ -1,7 +1,7 @@
 import { toast } from "sonner";
 
 export async function createTweet(content) {
-    const response = await fetch("http://localhost:3001/api/tweets", {
+    const response = await fetch(`${process.env.BASE_URL}/api/tweets`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
