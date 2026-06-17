@@ -1,21 +1,23 @@
 import RightSidebar from "../../components/layout/RightSidebar";
 import Sidebar from "../../components/layout/Sidebar";
 import TweetDetailsCard from "../../components/tweet/TweetDetailsCard";
+import {getTweet} from "../../lib/getTweet";
 
-async function getTweet(id) {
-    const res = await fetch(
-        `/api/tweets/${id}`
-    );
 
-    if (!res.ok) {
-        // const errorText = await res.text();
-        // console.log(errorText);
+// async function getTweet(id) {
+//     const res = await fetch(
+//         `/api/tweets/${id}`
+//     );
 
-        throw new Error(`Failed to fetch tweet: ${res.status}`);
-    }
+//     if (!res.ok) {
+//         // const errorText = await res.text();
+//         // console.log(errorText);
 
-    return res.json();
-}
+//         throw new Error(`Failed to fetch tweet: ${res.status}`);
+//     }
+
+//     return res.json();
+// }
 
 export default async function TweetPage({ params, searchParams }) {
 	const { id } = await params;
