@@ -4,7 +4,7 @@ import TweetDetailsCard from "../../components/tweet/TweetDetailsCard";
 
 async function getTweet(id) {
     const res = await fetch(
-        `${process.env.BASE_URL}/api/tweets/${id}`
+        `/api/tweets/${id}`
     );
 
     if (!res.ok) {

@@ -36,7 +36,7 @@ export default function TweetCard({ tweet }) {
         e.stopPropagation();
 
         const res = await fetch(
-            `${process.env.BASE_URL}/api/tweets/${tweet._id}/like`,
+            `/api/tweets/${tweet._id}/like`,
             {
                 method: "POST",
             }
